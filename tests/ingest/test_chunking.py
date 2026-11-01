@@ -99,3 +99,22 @@ def test_texto_indexado_lleva_el_encabezado(articulo_corto: Articulo) -> None:
 
     assert chunk.texto_indexado.startswith(encabezado(articulo_corto))
     assert chunk.encabezado == encabezado(articulo_corto)
+
+
+def test_parrafo_sin_numero_pertenece_al_apartado_anterior() -> None:
+    # En el BOE un apartado ocupa a veces varios <p>: el art. 38.2 tiene un segundo párrafo
+    # sin número ("En caso de desacuerdo…") que sigue siendo parte del 38.2.
+    texto = "\n".join(
+        [
+            _apartado(1, 150),
+            _apartado(2, 100),
+            "En caso de desacuerdo entre las partes, la jurisdicción social fijará la fecha.",
+            _apartado(3, 150),
+        ]
+    )
+    articulo = Articulo(numero="38", titulo="Vacaciones anuales", texto=texto)
+
+    chunks = trocear_articulo(articulo)
+
+    assert [c.id for c in chunks] == ["38.1", "38.2", "38.3"]
+    assert "En caso de desacuerdo" in chunks[1].texto
