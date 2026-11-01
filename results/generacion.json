@@ -1,6 +1,7 @@
 {
   "resumen": {
     "hibrido": {
+      "contexto_acierta": 0.8484848484848485,
       "abstencion_correcta": 1.0,
       "abstencion_indebida": 0.18181818181818182,
       "citas_inventadas": 0.0,
@@ -23,6 +24,10 @@
         ],
         "citas_invalidas": [],
         "abstencion": false,
+        "consultas": [
+          "¿Cuál es la duración máxima del periodo de prueba para los técnicos titulados?"
+        ],
+        "contexto_acierta": true,
         "fuentes": [
           "14.1",
           "11.2#3",
@@ -46,6 +51,10 @@
         ],
         "citas_invalidas": [],
         "abstencion": false,
+        "consultas": [
+          "¿Cuál es la duración máxima de la jornada ordinaria de trabajo?"
+        ],
+        "contexto_acierta": true,
         "fuentes": [
           "34.8#1",
           "34.2",
@@ -69,6 +78,10 @@
         ],
         "citas_invalidas": [],
         "abstencion": false,
+        "consultas": [
+          "¿Cuántas horas deben mediar como mínimo entre el final de una jornada y el comienzo de la siguiente?"
+        ],
+        "contexto_acierta": true,
         "fuentes": [
           "34.3",
           "34.2",
@@ -92,6 +105,10 @@
         ],
         "citas_invalidas": [],
         "abstencion": false,
+        "consultas": [
+          "¿Cuál es el número máximo de horas extraordinarias al año?"
+        ],
+        "contexto_acierta": true,
         "fuentes": [
           "35.2",
           "35.1",
@@ -115,6 +132,10 @@
         ],
         "citas_invalidas": [],
         "abstencion": false,
+        "consultas": [
+          "¿Cuántos días de vacaciones anuales retribuidas corresponden como mínimo?"
+        ],
+        "contexto_acierta": true,
         "fuentes": [
           "38",
           "37.1",
@@ -138,6 +159,10 @@
         ],
         "citas_invalidas": [],
         "abstencion": false,
+        "consultas": [
+          "¿Cuántas gratificaciones extraordinarias al año tiene derecho a percibir el trabajador?"
+        ],
+        "contexto_acierta": true,
         "fuentes": [
           "31",
           "46.3#1",
@@ -161,6 +186,10 @@
         ],
         "citas_invalidas": [],
         "abstencion": false,
+        "consultas": [
+          "¿A partir de qué edad se permite la admisión al trabajo?"
+        ],
+        "contexto_acierta": true,
         "fuentes": [
           "23.1",
           "34.8#1",
@@ -184,6 +213,10 @@
         ],
         "citas_invalidas": [],
         "abstencion": false,
+        "consultas": [
+          "¿Qué horario se considera trabajo nocturno?"
+        ],
+        "contexto_acierta": true,
         "fuentes": [
           "36.1",
           "36.4",
@@ -207,6 +240,10 @@
         ],
         "citas_invalidas": [],
         "abstencion": false,
+        "consultas": [
+          "¿Cuántos días de permiso retribuido corresponden por matrimonio?"
+        ],
+        "contexto_acierta": true,
         "fuentes": [
           "38",
           "37.3#1",
@@ -230,6 +267,10 @@
         ],
         "citas_invalidas": [],
         "abstencion": false,
+        "consultas": [
+          "¿Cuál es la duración mínima del descanso semanal?"
+        ],
+        "contexto_acierta": true,
         "fuentes": [
           "37.1",
           "34.4",
@@ -253,6 +294,10 @@
         ],
         "citas_invalidas": [],
         "abstencion": false,
+        "consultas": [
+          "¿Cuál es la indemnización por despido improcedente?"
+        ],
+        "contexto_acierta": true,
         "fuentes": [
           "dt11",
           "56.1",
@@ -276,6 +321,10 @@
         ],
         "citas_invalidas": [],
         "abstencion": false,
+        "consultas": [
+          "¿Cuánto puede durar la excedencia voluntaria?"
+        ],
+        "contexto_acierta": true,
         "fuentes": [
           "46.2",
           "46.3#1",
@@ -299,6 +348,10 @@
         ],
         "citas_invalidas": [],
         "abstencion": false,
+        "consultas": [
+          "¿Cuánto tiempo puede durar como máximo la excedencia por cuidado de cada hijo?"
+        ],
+        "contexto_acierta": true,
         "fuentes": [
           "46.3#1",
           "48bis",
@@ -322,6 +375,10 @@
         ],
         "citas_invalidas": [],
         "abstencion": false,
+        "consultas": [
+          "¿En qué plazo prescriben las faltas muy graves de los trabajadores?"
+        ],
+        "contexto_acierta": true,
         "fuentes": [
           "49.1#3",
           "47.5",
@@ -345,6 +402,10 @@
         ],
         "citas_invalidas": [],
         "abstencion": false,
+        "consultas": [
+          "¿Cuál es la duración máxima del pacto de no competencia tras extinguirse el contrato para los técnicos?"
+        ],
+        "contexto_acierta": true,
         "fuentes": [
           "49.1#1",
           "11.2#3",
@@ -366,6 +427,10 @@
         "citas": [],
         "citas_invalidas": [],
         "abstencion": true,
+        "consultas": [
+          "Me han echado por llegar tarde muchas veces, ¿pueden hacerlo?"
+        ],
+        "contexto_acierta": false,
         "fuentes": [
           "34.8#1",
           "30",
@@ -387,6 +452,10 @@
         "citas": [],
         "citas_invalidas": [],
         "abstencion": true,
+        "consultas": [
+          "Mi jefe me escribe por WhatsApp a las once de la noche, ¿tengo que contestar?"
+        ],
+        "contexto_acierta": false,
         "fuentes": [
           "36.1",
           "36.3",
@@ -410,6 +479,10 @@
         ],
         "citas_invalidas": [],
         "abstencion": false,
+        "consultas": [
+          "Mi empresa quiere mandarme a trabajar a otra ciudad, ¿puede hacerlo?"
+        ],
+        "contexto_acierta": true,
         "fuentes": [
           "43",
           "40.2#1",
@@ -434,6 +507,10 @@
         ],
         "citas_invalidas": [],
         "abstencion": false,
+        "consultas": [
+          "Voy a tener un bebé, ¿cuánto tiempo puedo estar de baja?"
+        ],
+        "contexto_acierta": false,
         "fuentes": [
           "37.3#2",
           "37.3#1",
@@ -457,6 +534,10 @@
         ],
         "citas_invalidas": [],
         "abstencion": false,
+        "consultas": [
+          "Se ha muerto un familiar mío, ¿me dan días libres?"
+        ],
+        "contexto_acierta": true,
         "fuentes": [
           "37.3#1",
           "37.6#1",
@@ -480,6 +561,10 @@
         ],
         "citas_invalidas": [],
         "abstencion": false,
+        "consultas": [
+          "¿Cada cuánto me tienen que pagar la nómina?"
+        ],
+        "contexto_acierta": true,
         "fuentes": [
           "29.1",
           "27",
@@ -501,6 +586,10 @@
         "citas": [],
         "citas_invalidas": [],
         "abstencion": true,
+        "consultas": [
+          "¿Me tienen que dar el contrato firmado en papel?"
+        ],
+        "contexto_acierta": true,
         "fuentes": [
           "8.2",
           "8.4",
@@ -526,6 +615,10 @@
         ],
         "citas_invalidas": [],
         "abstencion": false,
+        "consultas": [
+          "Mi empresa va mal y quiere reducirme la jornada unos meses, ¿puede?"
+        ],
+        "contexto_acierta": false,
         "fuentes": [
           "47.7#1",
           "34.2",
@@ -549,6 +642,10 @@
         ],
         "citas_invalidas": [],
         "abstencion": false,
+        "consultas": [
+          "Me quieren poner a hacer tareas de una categoría inferior, ¿es legal?"
+        ],
+        "contexto_acierta": true,
         "fuentes": [
           "37.8",
           "39.2",
@@ -573,6 +670,10 @@
         ],
         "citas_invalidas": [],
         "abstencion": false,
+        "consultas": [
+          "La empresa no me paga el sueldo desde hace meses, ¿puedo irme con indemnización?"
+        ],
+        "contexto_acierta": true,
         "fuentes": [
           "49.1#3",
           "dt11",
@@ -594,6 +695,10 @@
         "citas": [],
         "citas_invalidas": [],
         "abstencion": true,
+        "consultas": [
+          "Quiero dejar el trabajo, ¿con cuánta antelación tengo que avisar?"
+        ],
+        "contexto_acierta": true,
         "fuentes": [
           "49.1#3",
           "37.3#1",
@@ -615,6 +720,10 @@
         "citas": [],
         "citas_invalidas": [],
         "abstencion": true,
+        "consultas": [
+          "Me han despedido y no estoy de acuerdo, ¿cuánto tiempo tengo para reclamar?"
+        ],
+        "contexto_acierta": false,
         "fuentes": [
           "56.5",
           "dt11",
@@ -639,6 +748,10 @@
         ],
         "citas_invalidas": [],
         "abstencion": false,
+        "consultas": [
+          "¿Qué diferencia hay entre la indemnización por despido objetivo y la del despido improcedente?"
+        ],
+        "contexto_acierta": true,
         "fuentes": [
           "dt11",
           "56.1",
@@ -662,6 +775,10 @@
         ],
         "citas_invalidas": [],
         "abstencion": false,
+        "consultas": [
+          "¿Cuántas horas extra puedo hacer al año y cómo se compensan?"
+        ],
+        "contexto_acierta": true,
         "fuentes": [
           "12.5#1",
           "35.2",
@@ -683,6 +800,10 @@
         "citas": [],
         "citas_invalidas": [],
         "abstencion": true,
+        "consultas": [
+          "Si me despiden por causas objetivas, ¿cuánto me indemnizan y cuánto tiempo tengo para impugnarlo?"
+        ],
+        "contexto_acierta": true,
         "fuentes": [
           "dt11",
           "53.4#2",
@@ -706,6 +827,10 @@
         ],
         "citas_invalidas": [],
         "abstencion": false,
+        "consultas": [
+          "¿Cuál es la jornada máxima semanal y cuántas horas puedo trabajar como máximo en un día?"
+        ],
+        "contexto_acierta": true,
         "fuentes": [
           "36.1",
           "34.3",
@@ -732,6 +857,10 @@
         ],
         "citas_invalidas": [],
         "abstencion": false,
+        "consultas": [
+          "¿Cuánto dura el periodo de prueba de un técnico titulado y cuenta ese tiempo para la antigüedad?"
+        ],
+        "contexto_acierta": true,
         "fuentes": [
           "14.1",
           "11.3#2",
@@ -753,6 +882,10 @@
         "citas": [],
         "citas_invalidas": [],
         "abstencion": false,
+        "consultas": [
+          "¿Qué diferencia de duración hay entre la excedencia voluntaria y la excedencia por cuidado de hijos?"
+        ],
+        "contexto_acierta": true,
         "fuentes": [
           "46.3#1",
           "46.2",
@@ -774,6 +907,10 @@
         "citas": [],
         "citas_invalidas": [],
         "abstencion": true,
+        "consultas": [
+          "¿Cuál es el importe del salario mínimo interprofesional en 2026?"
+        ],
+        "contexto_acierta": false,
         "fuentes": [
           "27",
           "32",
@@ -795,6 +932,10 @@
         "citas": [],
         "citas_invalidas": [],
         "abstencion": true,
+        "consultas": [
+          "¿Cuántos días de vacaciones tiene un funcionario público?"
+        ],
+        "contexto_acierta": false,
         "fuentes": [
           "38",
           "37.3#1",
@@ -816,6 +957,10 @@
         "citas": [],
         "citas_invalidas": [],
         "abstencion": true,
+        "consultas": [
+          "¿Cuánto cobra un camarero según el convenio de hostelería de Madrid?"
+        ],
+        "contexto_acierta": false,
         "fuentes": [
           "27",
           "84.3",
@@ -837,6 +982,10 @@
         "citas": [],
         "citas_invalidas": [],
         "abstencion": true,
+        "consultas": [
+          "¿Durante cuánto tiempo puedo cobrar el paro?"
+        ],
+        "contexto_acierta": false,
         "fuentes": [
           "37.3#1",
           "48bis",
@@ -858,6 +1007,10 @@
         "citas": [],
         "citas_invalidas": [],
         "abstencion": true,
+        "consultas": [
+          "¿Qué pena establece el Código Penal para el acoso laboral?"
+        ],
+        "contexto_acierta": false,
         "fuentes": [
           "49.1#3",
           "2",
@@ -879,6 +1032,10 @@
         "citas": [],
         "citas_invalidas": [],
         "abstencion": true,
+        "consultas": [
+          "¿Cuántos días de permiso me corresponden por el cumpleaños de mi hijo?"
+        ],
+        "contexto_acierta": false,
         "fuentes": [
           "48bis",
           "37.3#1",
@@ -900,6 +1057,10 @@
         "citas": [],
         "citas_invalidas": [],
         "abstencion": true,
+        "consultas": [
+          "¿Cómo se calcula la pensión de jubilación?"
+        ],
+        "contexto_acierta": false,
         "fuentes": [
           "12.6",
           "da10.1",

@@ -2,7 +2,13 @@
 
 import pytest
 
-from estatuto_rag.evals.generacion import cita_acierta, evaluar_pregunta, resumir, tabla_markdown
+from estatuto_rag.evals.generacion import (
+    cita_acierta,
+    evaluar_pregunta,
+    rag_simple,
+    resumir,
+    tabla_markdown,
+)
 from estatuto_rag.evals.golden import PreguntaGolden
 from estatuto_rag.evals.juez import Juez, si_no
 from estatuto_rag.generation.citas import ABSTENCION
@@ -48,21 +54,21 @@ def test_cita_acierta(cita: str, ref: str, esperado: bool) -> None:
 
 def test_respuesta_con_cita_correcta_y_juez() -> None:
     fila = evaluar_pregunta(
-        _p(), _Recuperador(), _LLM("Son 30 días [art. 38.1]."), Juez(_LLM("SI"))
+        _p(), rag_simple(_Recuperador(), _LLM("Son 30 días [art. 38.1].")), Juez(_LLM("SI"))
     )
     assert fila.cita_correcta and not fila.citas_invalidas and not fila.abstencion
     assert fila.fiel is True and fila.correcta is True
 
 
 def test_cita_inventada_se_detecta() -> None:
-    fila = evaluar_pregunta(_p(), _Recuperador(), _LLM("Son 30 días [art. 99]."), None)
+    fila = evaluar_pregunta(_p(), rag_simple(_Recuperador(), _LLM("Son 30 días [art. 99].")), None)
     assert fila.citas_invalidas == ["99"]
     assert not fila.cita_correcta
 
 
 def test_abstencion_indebida_es_incorrecta_sin_llamar_al_juez() -> None:
     juez_llm = _LLM("SI")
-    fila = evaluar_pregunta(_p(), _Recuperador(), _LLM(ABSTENCION), Juez(juez_llm))
+    fila = evaluar_pregunta(_p(), rag_simple(_Recuperador(), _LLM(ABSTENCION)), Juez(juez_llm))
     assert fila.abstencion and fila.correcta is False and fila.fiel is None
     assert juez_llm.llamadas == 0
 
@@ -70,10 +76,10 @@ def test_abstencion_indebida_es_incorrecta_sin_llamar_al_juez() -> None:
 def test_resumen_separa_preguntas_con_y_sin_respuesta() -> None:
     rec = _Recuperador()
     filas = [
-        evaluar_pregunta(_p(), rec, _LLM("Son 30 días [art. 38.1]."), None),
-        evaluar_pregunta(_p(), rec, _LLM(ABSTENCION), None),
-        evaluar_pregunta(_p("sin_respuesta", []), rec, _LLM(ABSTENCION), None),
-        evaluar_pregunta(_p("sin_respuesta", []), rec, _LLM("Sí [art. 7]."), None),
+        evaluar_pregunta(_p(), rag_simple(rec, _LLM("Son 30 días [art. 38.1].")), None),
+        evaluar_pregunta(_p(), rag_simple(rec, _LLM(ABSTENCION)), None),
+        evaluar_pregunta(_p("sin_respuesta", []), rag_simple(rec, _LLM(ABSTENCION)), None),
+        evaluar_pregunta(_p("sin_respuesta", []), rag_simple(rec, _LLM("Sí [art. 7].")), None),
     ]
     resumen = resumir(filas)
     assert resumen["abstencion_correcta"] == 0.5
@@ -81,6 +87,6 @@ def test_resumen_separa_preguntas_con_y_sin_respuesta() -> None:
     assert resumen["citas_inventadas"] == 0.25
     assert resumen["cita_correcta"] == 0.5
     assert resumen["fidelidad"] is None  # sin juez
-    assert "| hibrido | 0.50 | 0.50 | 0.25 | 0.50 | 1.00 | - | - |" in tabla_markdown(
+    assert "| hibrido | 1.00 | 0.50 | 0.50 | 0.25 | 0.50 | 1.00 | - | - |" in tabla_markdown(
         {"hibrido": resumen}
     )
