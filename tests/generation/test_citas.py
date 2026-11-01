@@ -34,6 +34,7 @@ def test_formatear_contexto_usa_etiquetas_con_id() -> None:
 def test_extraer_citas_unicas_y_en_orden() -> None:
     texto = "Son 30 días [art. 38.1]. Se pactan [art. 38.2, 38.1]. Ver también [art. 38.1]."
     assert extraer_citas(texto) == ["38.1", "38.2"]
+    assert extraer_citas("Permiso parental [art. 48 bis.1].") == ["48bis.1"]
 
 
 def test_es_abstencion() -> None:

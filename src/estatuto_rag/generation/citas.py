@@ -27,7 +27,8 @@ def extraer_citas(texto: str) -> list[str]:
     citas: list[str] = []
     for grupo in CITA.findall(texto):
         for cita in grupo.split(","):
-            cita = cita.strip()
+            # "48 bis.1" → "48bis.1": así se llaman los chunks.
+            cita = re.sub(r"(\d+)\s+(bis|ter|quater)\b", r"\1\2", cita.strip())
             if cita and cita not in citas:
                 citas.append(cita)
     return citas
