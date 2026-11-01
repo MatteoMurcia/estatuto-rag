@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="340" viewBox="0 0 760 340" role="img" aria-label="RAG simple frente a agente"><title>RAG simple frente a agente</title>
+<style>
+  .fondo { fill: #fcfcfb; }
+  .t1 { fill: #0b0b0b; font: 600 15px system-ui, -apple-system, 'Segoe UI', sans-serif; }
+  .t2 { fill: #52514e; font: 12px system-ui, -apple-system, 'Segoe UI', sans-serif; }
+  .val { fill: #0b0b0b; font: 600 11px system-ui, -apple-system, 'Segoe UI', sans-serif; }
+  .rejilla { stroke: #e4e3df; stroke-width: 1; }
+  .eje { stroke: #b5b4ad; stroke-width: 1; }
+  .s1 { fill: #2a78d6; } .s2 { fill: #eb6834; } .s3 { fill: #1baf7a; }
+  .trama { stroke: #eb6834; stroke-width: 1.5; }
+  .borde { stroke: #eb6834; stroke-width: 1; }
+  @media (prefers-color-scheme: dark) {
+    .fondo { fill: #1a1a19; }
+    .t1, .val { fill: #f0efec; }
+    .t2 { fill: #c3c2b7; }
+    .rejilla { stroke: #2e2e2c; }
+    .eje { stroke: #5a5955; }
+    .s1 { fill: #3987e5; } .s2 { fill: #d95926; } .s3 { fill: #199e70; }
+    .trama { stroke: #d95926; }
+    .borde { stroke: #d95926; }
+  }
+</style>
+<defs>
+  <pattern id="estimado" width="6" height="6" patternUnits="userSpaceOnUse"
+           patternTransform="rotate(45)">
+    <line x1="0" y1="0" x2="0" y2="6" class="trama"/>
+  </pattern>
+</defs>
+<rect class="fondo" width="760" height="340" rx="8"/><text x="16.0" y="28.0" class="t1" text-anchor="start">RAG simple frente a agente</text><text x="16.0" y="48.0" class="t2" text-anchor="start">40 preguntas · la v2 solo reescribe cuando el RAG se abstiene</text><rect x="16.0" y="61.0" width="10" height="10" rx="2" class="s1"/><text x="31.0" y="70.0" class="t2" text-anchor="start">RAG simple</text><rect x="108.0" y="61.0" width="10" height="10" rx="2" class="s2"/><text x="123.0" y="70.0" class="t2" text-anchor="start">Agente v1: reescribe siempre</text><rect x="326.0" y="61.0" width="10" height="10" rx="2" class="s3"/><text x="341.0" y="70.0" class="t2" text-anchor="start">Agente v2: reescribe si se abstiene</text><line x1="48" x2="744" y1="288.0" y2="288.0" class="rejilla"/><text x="40.0" y="292.0" class="t2" text-anchor="end">0.0</text><line x1="48" x2="744" y1="247.2" y2="247.2" class="rejilla"/><text x="40.0" y="251.2" class="t2" text-anchor="end">0.2</text><line x1="48" x2="744" y1="206.4" y2="206.4" class="rejilla"/><text x="40.0" y="210.4" class="t2" text-anchor="end">0.4</text><line x1="48" x2="744" y1="165.6" y2="165.6" class="rejilla"/><text x="40.0" y="169.6" class="t2" text-anchor="end">0.6</text><line x1="48" x2="744" y1="124.8" y2="124.8" class="rejilla"/><text x="40.0" y="128.8" class="t2" text-anchor="end">0.8</text><line x1="48" x2="744" y1="84.0" y2="84.0" class="rejilla"/><text x="40.0" y="88.0" class="t2" text-anchor="end">1.0</text><path class="s1" d="M111.0,288.0 V130.8 Q111.0,126.8 115.0,126.8 H141.0 Q145.0,126.8 145.0,130.8 V288.0 Z"/><text x="128.0" y="121.8" class="val" text-anchor="middle">0.79</text><path class="s2" d="M147.0,288.0 V137.0 Q147.0,133.0 151.0,133.0 H177.0 Q181.0,133.0 181.0,137.0 V288.0 Z"/><text x="164.0" y="128.0" class="val" text-anchor="middle">0.76</text><path class="s3" d="M183.0,288.0 V124.7 Q183.0,120.7 187.0,120.7 H213.0 Q217.0,120.7 217.0,124.7 V288.0 Z"/><text x="200.0" y="115.7" class="val" text-anchor="middle">0.82</text><text x="164.0" y="308.0" class="t2" text-anchor="middle">Corrección (juez)</text><path class="s1" d="M343.0,288.0 V149.2 Q343.0,145.2 347.0,145.2 H373.0 Q377.0,145.2 377.0,149.2 V288.0 Z"/><text x="360.0" y="140.2" class="val" text-anchor="middle">0.70</text><path class="s2" d="M379.0,288.0 V149.2 Q379.0,145.2 383.0,145.2 H409.0 Q413.0,145.2 413.0,149.2 V288.0 Z"/><text x="396.0" y="140.2" class="val" text-anchor="middle">0.70</text><path class="s3" d="M415.0,288.0 V143.1 Q415.0,139.1 419.0,139.1 H445.0 Q449.0,139.1 449.0,143.1 V288.0 Z"/><text x="432.0" y="134.1" class="val" text-anchor="middle">0.73</text><text x="396.0" y="308.0" class="t2" text-anchor="middle">Cita correcta</text><path class="s1" d="M575.0,288.0 V125.1 Q575.0,121.1 579.0,121.1 H605.0 Q609.0,121.1 609.0,125.1 V288.0 Z"/><text x="592.0" y="116.1" class="val" text-anchor="middle">0.82</text><path class="s2" d="M611.0,288.0 V106.5 Q611.0,102.5 615.0,102.5 H641.0 Q645.0,102.5 645.0,106.5 V288.0 Z"/><text x="628.0" y="97.5" class="val" text-anchor="middle">0.91</text><path class="s3" d="M647.0,288.0 V112.7 Q647.0,108.7 651.0,108.7 H677.0 Q681.0,108.7 681.0,112.7 V288.0 Z"/><text x="664.0" y="103.7" class="val" text-anchor="middle">0.88</text><text x="628.0" y="308.0" class="t2" text-anchor="middle">Responde cuando hay respuesta</text><line x1="48" x2="744" y1="288" y2="288" class="eje"/></svg>

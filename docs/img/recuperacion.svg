@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="340" viewBox="0 0 760 340" role="img" aria-label="Recuperación: ¿llega el apartado correcto al contexto?"><title>Recuperación: ¿llega el apartado correcto al contexto?</title>
+<style>
+  .fondo { fill: #fcfcfb; }
+  .t1 { fill: #0b0b0b; font: 600 15px system-ui, -apple-system, 'Segoe UI', sans-serif; }
+  .t2 { fill: #52514e; font: 12px system-ui, -apple-system, 'Segoe UI', sans-serif; }
+  .val { fill: #0b0b0b; font: 600 11px system-ui, -apple-system, 'Segoe UI', sans-serif; }
+  .rejilla { stroke: #e4e3df; stroke-width: 1; }
+  .eje { stroke: #b5b4ad; stroke-width: 1; }
+  .s1 { fill: #2a78d6; } .s2 { fill: #eb6834; } .s3 { fill: #1baf7a; }
+  .trama { stroke: #eb6834; stroke-width: 1.5; }
+  .borde { stroke: #eb6834; stroke-width: 1; }
+  @media (prefers-color-scheme: dark) {
+    .fondo { fill: #1a1a19; }
+    .t1, .val { fill: #f0efec; }
+    .t2 { fill: #c3c2b7; }
+    .rejilla { stroke: #2e2e2c; }
+    .eje { stroke: #5a5955; }
+    .s1 { fill: #3987e5; } .s2 { fill: #d95926; } .s3 { fill: #199e70; }
+    .trama { stroke: #d95926; }
+    .borde { stroke: #d95926; }
+  }
+</style>
+<defs>
+  <pattern id="estimado" width="6" height="6" patternUnits="userSpaceOnUse"
+           patternTransform="rotate(45)">
+    <line x1="0" y1="0" x2="0" y2="6" class="trama"/>
+  </pattern>
+</defs>
+<rect class="fondo" width="760" height="340" rx="8"/><text x="16.0" y="28.0" class="t1" text-anchor="start">Recuperación: ¿llega el apartado correcto al contexto?</text><text x="16.0" y="48.0" class="t2" text-anchor="start">33 preguntas con respuesta · el reranker es el único que mejora a la vectorial</text><rect x="16.0" y="61.0" width="10" height="10" rx="2" class="s1"/><text x="31.0" y="70.0" class="t2" text-anchor="start">hit@1 (primer resultado)</text><rect x="206.0" y="61.0" width="10" height="10" rx="2" class="s2"/><text x="221.0" y="70.0" class="t2" text-anchor="start">hit@5 (entre los 5 primeros)</text><rect x="424.0" y="61.0" width="10" height="10" rx="2" class="s3"/><text x="439.0" y="70.0" class="t2" text-anchor="start">MRR@10</text><line x1="48" x2="744" y1="288.0" y2="288.0" class="rejilla"/><text x="40.0" y="292.0" class="t2" text-anchor="end">0.0</text><line x1="48" x2="744" y1="247.2" y2="247.2" class="rejilla"/><text x="40.0" y="251.2" class="t2" text-anchor="end">0.2</text><line x1="48" x2="744" y1="206.4" y2="206.4" class="rejilla"/><text x="40.0" y="210.4" class="t2" text-anchor="end">0.4</text><line x1="48" x2="744" y1="165.6" y2="165.6" class="rejilla"/><text x="40.0" y="169.6" class="t2" text-anchor="end">0.6</text><line x1="48" x2="744" y1="124.8" y2="124.8" class="rejilla"/><text x="40.0" y="128.8" class="t2" text-anchor="end">0.8</text><line x1="48" x2="744" y1="84.0" y2="84.0" class="rejilla"/><text x="40.0" y="88.0" class="t2" text-anchor="end">1.0</text><path class="s1" d="M82.0,288.0 V143.1 Q82.0,139.1 86.0,139.1 H112.0 Q116.0,139.1 116.0,143.1 V288.0 Z"/><text x="99.0" y="134.1" class="val" text-anchor="middle">0.73</text><path class="s2" d="M118.0,288.0 V118.6 Q118.0,114.6 122.0,114.6 H148.0 Q152.0,114.6 152.0,118.6 V288.0 Z"/><text x="135.0" y="109.6" class="val" text-anchor="middle">0.85</text><path class="s3" d="M154.0,288.0 V128.8 Q154.0,124.8 158.0,124.8 H184.0 Q188.0,124.8 188.0,128.8 V288.0 Z"/><text x="171.0" y="119.8" class="val" text-anchor="middle">0.80</text><text x="135.0" y="308.0" class="t2" text-anchor="middle">Vectorial</text><path class="s1" d="M256.0,288.0 V255.3 Q256.0,251.3 260.0,251.3 H286.0 Q290.0,251.3 290.0,255.3 V288.0 Z"/><text x="273.0" y="246.3" class="val" text-anchor="middle">0.18</text><path class="s2" d="M292.0,288.0 V194.1 Q292.0,190.1 296.0,190.1 H322.0 Q326.0,190.1 326.0,194.1 V288.0 Z"/><text x="309.0" y="185.1" class="val" text-anchor="middle">0.48</text><path class="s3" d="M328.0,288.0 V232.8 Q328.0,228.8 332.0,228.8 H358.0 Q362.0,228.8 362.0,232.8 V288.0 Z"/><text x="345.0" y="223.8" class="val" text-anchor="middle">0.29</text><text x="309.0" y="308.0" class="t2" text-anchor="middle">Full-text</text><path class="s1" d="M430.0,288.0 V200.2 Q430.0,196.2 434.0,196.2 H460.0 Q464.0,196.2 464.0,200.2 V288.0 Z"/><text x="447.0" y="191.2" class="val" text-anchor="middle">0.45</text><path class="s2" d="M466.0,288.0 V118.6 Q466.0,114.6 470.0,114.6 H496.0 Q500.0,114.6 500.0,118.6 V288.0 Z"/><text x="483.0" y="109.6" class="val" text-anchor="middle">0.85</text><path class="s3" d="M502.0,288.0 V167.6 Q502.0,163.6 506.0,163.6 H532.0 Q536.0,163.6 536.0,167.6 V288.0 Z"/><text x="519.0" y="158.6" class="val" text-anchor="middle">0.61</text><text x="483.0" y="308.0" class="t2" text-anchor="middle">Híbrida (RRF)</text><path class="s1" d="M604.0,288.0 V155.3 Q604.0,151.3 608.0,151.3 H634.0 Q638.0,151.3 638.0,155.3 V288.0 Z"/><text x="621.0" y="146.3" class="val" text-anchor="middle">0.67</text><path class="s2" d="M640.0,288.0 V112.5 Q640.0,108.5 644.0,108.5 H670.0 Q674.0,108.5 674.0,112.5 V288.0 Z"/><text x="657.0" y="103.5" class="val" text-anchor="middle">0.88</text><path class="s3" d="M676.0,288.0 V137.0 Q676.0,133.0 680.0,133.0 H706.0 Q710.0,133.0 710.0,137.0 V288.0 Z"/><text x="693.0" y="128.0" class="val" text-anchor="middle">0.76</text><text x="657.0" y="308.0" class="t2" text-anchor="middle">Híbrida + reranker</text><line x1="48" x2="744" y1="288" y2="288" class="eje"/></svg>
