@@ -1,22 +1,62 @@
-"""Parser del XML de la API de legislación consolidada del BOE.
+"""Parser del XML de la API de legislación consolidada del BOE."""
 
-Formato (ver tests/fixtures/boe_a38.xml y el spike):
-- <response><data> contiene <bloque id=… tipo="encabezado"|"precepto"|…> en orden del documento.
-- Cada bloque tiene una o varias <version>; la vigente es la ÚLTIMA.
-- En un precepto: <p class="articulo"> es "Artículo 38. Vacaciones anuales.", los
-  <p class="parrafo"> son el texto y <p class="nota_pie"> son notas de modificación (se descartan).
-- Los encabezados (ti, cii, s5…) fijan Título / Capítulo / Sección de los preceptos que siguen.
-- OJO: los ids de bloque NO sirven como número de artículo ("a2-2" es el art. 20 bis, "da" es la
-  disposición adicional vigesimosegunda). El número sale del texto de <p class="articulo">.
-- Las letras a), b)… vienen como <p class="parrafo_2"> y son texto del precepto.
-- Antes de las disposiciones no hay encabezado que "cierre" el último Título: hay que resetear la
-  jerarquía al llegar a la primera disposición.
-"""
+import re
+import unicodedata
+import xml.etree.ElementTree as ET
 
 from estatuto_rag.ingest.models import Articulo
 
-# Bloques que pertenecen al Real Decreto Legislativo que aprueba el Estatuto, no al Estatuto.
 BLOQUES_EXCLUIDOS = frozenset({"preambulo", "aunico", "ddunica", "firma"})
+CLASES_TEXTO = frozenset({"parrafo", "parrafo_2"})
+
+CABECERA = re.compile(
+    r"^(?P<tipo>Artículo|Disposición adicional|Disposición transitoria|Disposición final)"
+    r" (?P<numero>[^.]+)\.\s*(?P<titulo>.*?)\.?$"
+)
+PREFIJOS = {
+    "Disposición adicional": "da",
+    "Disposición transitoria": "dt",
+    "Disposición final": "df",
+}
+
+UNIDADES = {
+    "primera": 1, "segunda": 2, "tercera": 3, "cuarta": 4, "quinta": 5,
+    "sexta": 6, "septima": 7, "octava": 8, "novena": 9,
+}
+ESPECIALES = {"unica": 1, "decima": 10, "undecima": 11, "duodecima": 12, "vigesima": 20}
+
+
+def _sin_tildes(texto: str) -> str:
+    descompuesto = unicodedata.normalize("NFD", texto)
+    return "".join(c for c in descompuesto if unicodedata.category(c) != "Mn")
+
+
+def ordinal_a_numero(ordinal: str) -> int:
+    """'vigesimosegunda' -> 22, 'décima' -> 10, 'primera' -> 1."""
+    palabra = _sin_tildes(ordinal.lower())
+    if palabra in UNIDADES:
+        return UNIDADES[palabra]
+    if palabra in ESPECIALES:
+        return ESPECIALES[palabra]
+    for prefijo, decena in (("decim", 10), ("vigesim", 20)):
+        if palabra.startswith(prefijo):
+            # "decimotercera" -> "otercera" -> "tercera"; "decimoctava" -> "octava"
+            resto = palabra.removeprefix(prefijo)
+            if resto not in UNIDADES:
+                resto = resto.removeprefix("o")
+            return decena + UNIDADES[resto]
+    raise ValueError(f"Ordinal desconocido: {ordinal!r}")
+
+
+def parsear_cabecera(cabecera: str) -> tuple[str, str]:
+    """'Artículo 20 bis. Derechos…' -> ('20bis', 'Derechos…')."""
+    m = CABECERA.match(cabecera)
+    if m is None:
+        raise ValueError(f"Cabecera no reconocida: {cabecera!r}")
+    tipo, numero, titulo = m.group("tipo"), m.group("numero"), m.group("titulo")
+    if tipo == "Artículo":
+        return numero.replace(" ", ""), titulo
+    return f"{PREFIJOS[tipo]}{ordinal_a_numero(numero)}", titulo
 
 
 def parsear_boe(xml: str) -> list[Articulo]:
