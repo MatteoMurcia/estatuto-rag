@@ -6,6 +6,7 @@ Te toca implementar estas tres funciones hasta que pasen `tests/ingest/test_chun
 from estatuto_rag.ingest.models import Articulo, Chunk
 
 MAX_TOKENS = 400
+TOKENS_POR_PALABRA = 1.3
 
 
 def contar_tokens(texto: str) -> int:
@@ -13,7 +14,8 @@ def contar_tokens(texto: str) -> int:
 
     Decide tú la aproximación y justifícala (palabras x factor, tiktoken, el tokenizer de bge-m3…).
     """
-    raise NotImplementedError
+    palabras = len(texto.split())
+    return round(palabras * TOKENS_POR_PALABRA)
 
 
 def encabezado(articulo: Articulo) -> str:
@@ -22,7 +24,12 @@ def encabezado(articulo: Articulo) -> str:
     Ejemplo: "Estatuto de los Trabajadores · Título I · Capítulo II · Art. 38. Vacaciones anuales".
     Los niveles que sean None no aparecen.
     """
-    raise NotImplementedError
+    partes = ["Estatuto de los Trabajadores"]
+    for nivel in (articulo.titulo_ley, articulo.capitulo, articulo.seccion):
+        if nivel is not None:
+            partes.append(nivel)
+    partes.append(f"Art. {articulo.numero}. {articulo.titulo}")
+    return " · ".join(partes)
 
 
 def trocear_articulo(articulo: Articulo, max_tokens: int = MAX_TOKENS) -> list[Chunk]:
