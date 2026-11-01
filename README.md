@@ -32,14 +32,27 @@ hit@5 en preguntas coloquiales ("me han echado por llegar tarde"): 0.58 vectoria
 | Cifras fieles | 26/27 | Todos los números de la respuesta aparecen en el contexto |
 | Corrección | 0.79 | Juez LLM (phi4-mini) contra la respuesta de referencia |
 
-Fuente: [`results/`](results/). Se regeneran con `python -m estatuto_rag.evals` y `python -m estatuto_rag.evals.generacion`.
+**RAG simple frente a agente** (LangGraph: si el modelo se abstiene, reescribe la pregunta en vocabulario jurídico y vuelve a buscar):
+
+| | RAG simple | Agente v1: reescribe siempre | Agente v2: reescribe solo si se abstiene |
+|---|---|---|---|
+| Abstención indebida | 6/33 | **3/33** | 4/33 |
+| Abstención correcta | 7/7 | 7/7 | 7/7 |
+| Corrección (juez) | 0.79 | 0.76 | **0.82** |
+| Cita correcta | 0.70 | 0.70 | **0.73** |
+| Cifras fieles | 26/27 | 30/30 | 27/29 |
+| p50 | **13.8 s** | 38.5 s | 17.0 s |
+
+Fuente: [`results/`](results/) (el reranker se midió en una ejecución anterior con el mismo código de recuperación). Se regeneran con `python -m estatuto_rag.evals` y `python -m estatuto_rag.evals.generacion`.
 
 ## Lo que enseñan los números
 
 1. **La fusión híbrida no mejora al vectorial; el reranker sí.** La búsqueda full-text es débil con preguntas naturales y, al fusionarla, mete ruido en la primera posición (hit@1 0.73 → 0.45). El reranker lo recupera (0.67) y sube el hit@5, pero cuesta 29 s por pregunta sin GPU: en este hardware no compensa en producción.
-2. **El cuello de botella es la recuperación de preguntas coloquiales.** En 4 de las 6 abstenciones indebidas, el artículo que hace falta no llega al contexto. Por eso el siguiente paso es un agente que reescribe la consulta, no un modelo más grande.
+2. **El cuello de botella es la recuperación de preguntas coloquiales.** En 4 de las 6 abstenciones indebidas del RAG simple, el artículo que hace falta no llega al contexto. Por eso lo siguiente fue un agente que reescribe la consulta, no un modelo más grande.
 3. **Un juez LLM sin validar es ruido.** Con respuestas casi idénticas, el juez de fidelidad pasó de 0.46 a 1.00 y dio por buena una respuesta que se inventaba una jornada de "42 horas". Lo sustituí por una comprobación determinista de cifras, que detecta justo esa alucinación.
-4. **Antes de fiarte de una métrica, mira sus fallos.** La primera medición daba un 23 % de citas inventadas; casi todas eran citas *más precisas* que el chunk (`[art. 38.1]` con el artículo 38 entero en el contexto). Era un fallo de la métrica, no del modelo.
+4. **La versión del agente que parecía más lista era peor.** Reescribir *todas* las preguntas bajaba el hit@5 de 0.85 a 0.79 (con 3 reescrituras contra 1 original, RRF deja que las reescrituras que se desvían echen el artículo correcto) y casi triplicaba la latencia. La mejora venía del *reintento*. En la v2, el primer intento es el RAG simple y la reescritura es el plan B: las preguntas directas no pueden empeorar y la mayoría no pagan la llamada extra. Ejemplo: "Me han echado por llegar tarde muchas veces, ¿pueden hacerlo?" → el RAG simple se abstiene; el agente reescribe "despido disciplinario por incumplimiento de deberes", encuentra el art. 54 y responde bien.
+5. **Responder más también es arriesgarse más.** En m03 el agente deja de abstenerse, pero la reescritura le lleva al despido disciplinario y aplica la indemnización del improcedente a un despido objetivo. Abstenerse era mejor. Las cifras fieles bajan de 26/27 a 27/29 por eso.
+6. **Antes de fiarte de una métrica, mira sus fallos.** La primera medición daba un 23 % de citas inventadas; casi todas eran citas *más precisas* que el chunk (`[art. 38.1]` con el artículo 38 entero en el contexto). Era un fallo de la métrica, no del modelo.
 
 ## Calidad en CI
 
@@ -70,6 +83,7 @@ pregunta ──► vectorial (bge-m3) ─┐
 - **Chunking por estructura legal:** un chunk por artículo si cabe en 400 tokens; si no, por apartado; si un apartado sigue siendo largo, se agrupan párrafos enteros. Cada chunk lleva la ruta jerárquica como cabecera, para que un apartado suelto conserve de qué artículo y capítulo forma parte.
 - **Citas verificables:** el modelo solo puede citar ids que estaban en el contexto; las demás se marcan como inventadas en la respuesta de la API.
 - **Abstención explícita:** si el contexto no contiene la respuesta, una frase fija y detectable.
+- **Agente** ([`agente/grafo.py`](src/estatuto_rag/agente/grafo.py)): `buscar → responder` y, si se abstiene, `reescribir → buscar → responder` una vez más. Mismo prompt y misma validación de citas que el RAG simple, para que la comparación mida solo el reintento.
 
 ## Ejecutarlo
 
@@ -106,7 +120,8 @@ bash scripts/verify_ci.sh                               # lo mismo que la CI, en
 
 ## Próximos pasos
 
-- Agente con LangGraph que reescribe la consulta y decide si volver a buscar, comparado contra este RAG con el mismo golden set.
 - Demo en Streamlit.
+- Usar la puntuación del reranker como señal de abstención antes de generar (si ningún chunk supera un umbral, ni siquiera llamar al LLM).
+- Ampliar el golden set con preguntas reales; con 33 preguntas, una sola mueve 3 puntos.
 
 Texto legal: [BOE-A-2015-11430](https://www.boe.es/buscar/act.php?id=BOE-A-2015-11430), versión consolidada descargada el 29/10/2026.
