@@ -9,6 +9,7 @@ class Config:
     database_url: str
     ollama_url: str
     embed_model: str
+    llm_model: str
 
 
 def cargar_config() -> Config:
@@ -19,4 +20,5 @@ def cargar_config() -> Config:
         ),
         ollama_url=os.environ.get("OLLAMA_URL", "http://localhost:11434"),
         embed_model=os.environ.get("EMBED_MODEL", "bge-m3"),
+        llm_model=os.environ.get("LLM_MODEL", "qwen2.5:7b"),
     )
