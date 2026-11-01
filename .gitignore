@@ -21,3 +21,5 @@ build/
 .idea/
 .DS_Store
 Thumbs.db
+
+* text=auto eol=lf

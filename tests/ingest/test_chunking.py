@@ -3,7 +3,7 @@
 import pytest
 
 from estatuto_rag.ingest.chunking import MAX_TOKENS, contar_tokens, encabezado, trocear_articulo
-from estatuto_rag.ingest.models import Articulo
+from estatuto_rag.ingest.models import Articulo, nombre_precepto
 
 
 def _apartado(n: int, palabras: int) -> str:
@@ -132,3 +132,16 @@ def test_apartado_demasiado_largo_se_divide_por_parrafos() -> None:
     assert len(chunks) > 1
     assert [c.id for c in chunks] == [f"41.4#{i}" for i in range(1, len(chunks) + 1)]
     assert all(contar_tokens(c.texto) <= MAX_TOKENS for c in chunks)
+
+
+@pytest.mark.parametrize(
+    ("numero", "esperado"),
+    [
+        ("38", "Art. 38"),
+        ("20bis", "Art. 20 bis"),
+        ("da1", "Disposición adicional 1.ª"),
+        ("dt13", "Disposición transitoria 13.ª"),
+    ],
+)
+def test_nombre_precepto_legible(numero: str, esperado: str) -> None:
+    assert nombre_precepto(numero) == esperado

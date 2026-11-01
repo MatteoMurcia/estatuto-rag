@@ -12,6 +12,19 @@ TOKENS_POR_PALABRA = 1.3
 
 # Un apartado numerado empieza por "1. ", "2. "… al principio de la línea.
 INICIO_APARTADO = re.compile(r"^(\d+)\. ")
+DISPOSICIONES = {
+    "da": "Disposición adicional",
+    "dt": "Disposición transitoria",
+    "df": "Disposición final",
+}
+
+
+def nombre_precepto(numero: str) -> str:
+    """'38' -> 'Art. 38', '20bis' -> 'Art. 20 bis', 'da1' -> 'Disposición adicional 1.ª'."""
+    prefijo = numero[:2]
+    if prefijo in DISPOSICIONES:
+        return f"{DISPOSICIONES[prefijo]} {numero[2:]}.ª"
+    return "Art. " + re.sub(r"^(\d+)(\D+)$", r"\1 \2", numero)
 
 
 def contar_tokens(texto: str) -> int:
@@ -33,7 +46,7 @@ def encabezado(articulo: Articulo) -> str:
     for nivel in (articulo.titulo_ley, articulo.capitulo, articulo.seccion):
         if nivel is not None:
             partes.append(nivel)
-    partes.append(f"Art. {articulo.numero}. {articulo.titulo}")
+        partes.append(f"{nombre_precepto(articulo.numero)}. {articulo.titulo}")
     return " · ".join(partes)
 
 
