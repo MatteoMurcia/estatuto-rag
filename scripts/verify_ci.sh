@@ -18,7 +18,7 @@ uv run ruff format --check .
 step "Tipos (mypy)"
 uv run mypy
 
-step "Tests (pytest)"
+step "Tests (pytest) — necesita la BD: docker compose up -d db"
 uv run pytest --cov=estatuto_rag --cov-report=term-missing
 
 step "Secretos (gitleaks)"
