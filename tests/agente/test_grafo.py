@@ -31,29 +31,33 @@ class RecuperadorEco:
         return [Resultado(pregunta, pregunta, None, "", "", 0.0)]
 
 
-def test_responde_a_la_primera_sin_reintentar() -> None:
+def test_responde_a_la_primera_sin_reescribir() -> None:
+    recuperador = RecuperadorEco()
     generador = LLMSecuencia("Son 30 días [art. 38].")
-    agente = Agente(RecuperadorEco(), generador, Reescritor(LLMSecuencia("vacaciones anuales")))
+    reescritor_llm = LLMSecuencia("vacaciones anuales")
+    agente = Agente(recuperador, generador, Reescritor(reescritor_llm))
     r = agente.responder("¿cuántas vacaciones tengo?")
     assert not r.abstencion
     assert generador.llamadas == 1
-    assert r.consultas == ["¿cuántas vacaciones tengo?", "vacaciones anuales"]
+    assert reescritor_llm.llamadas == 0  # sin abstención no se paga la reescritura
+    assert recuperador.consultas == ["¿cuántas vacaciones tengo?"]
+    assert r.consultas == ["¿cuántas vacaciones tengo?"]
 
 
-def test_reintenta_con_consultas_nuevas_si_se_abstiene() -> None:
+def test_si_se_abstiene_reescribe_y_busca_solo_con_las_reescrituras() -> None:
     recuperador = RecuperadorEco()
     generador = LLMSecuencia(ABSTENCION, "Es despido disciplinario [art. 54].")
-    reescritor = Reescritor(LLMSecuencia("faltas de puntualidad", "despido disciplinario"))
+    reescritor = Reescritor(LLMSecuencia("despido disciplinario\nfaltas de puntualidad"))
     r = Agente(recuperador, generador, reescritor).responder("me han echado por llegar tarde")
 
-    assert not r.abstencion and r.citas == []  # "54" no estaba en este contexto falso
+    assert not r.abstencion
     assert generador.llamadas == 2
-    # Primer intento: original + reescritura. Reintento: solo la consulta nueva.
     assert recuperador.consultas == [
         "me han echado por llegar tarde",
-        "faltas de puntualidad",
         "despido disciplinario",
+        "faltas de puntualidad",
     ]
+    assert r.consultas == recuperador.consultas
 
 
 def test_se_rinde_tras_el_maximo_de_intentos() -> None:
