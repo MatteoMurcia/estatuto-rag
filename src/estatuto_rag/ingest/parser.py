@@ -20,8 +20,15 @@ PREFIJOS = {
 }
 
 UNIDADES = {
-    "primera": 1, "segunda": 2, "tercera": 3, "cuarta": 4, "quinta": 5,
-    "sexta": 6, "septima": 7, "octava": 8, "novena": 9,
+    "primera": 1,
+    "segunda": 2,
+    "tercera": 3,
+    "cuarta": 4,
+    "quinta": 5,
+    "sexta": 6,
+    "septima": 7,
+    "octava": 8,
+    "novena": 9,
 }
 ESPECIALES = {"unica": 1, "decima": 10, "undecima": 11, "duodecima": 12, "vigesima": 20}
 
@@ -59,6 +66,58 @@ def parsear_cabecera(cabecera: str) -> tuple[str, str]:
     return f"{PREFIJOS[tipo]}{ordinal_a_numero(numero)}", titulo
 
 
+def _texto(p: ET.Element) -> str:
+    """Texto de un <p>, incluido el de sus etiquetas hijas, con los espacios normalizados."""
+    return " ".join("".join(p.itertext()).split())
+
+
+def _nivel(texto: str) -> str:
+    """'TÍTULO I' -> 'Título I'."""
+    palabra, resto = texto.split(maxsplit=1)
+    return f"{palabra.capitalize()} {resto}"
+
+
 def parsear_boe(xml: str) -> list[Articulo]:
     """Convierte la respuesta XML del BOE en la lista de preceptos del Estatuto, en orden."""
-    raise NotImplementedError
+    raiz = ET.fromstring(xml)
+    titulo_ley: str | None = None
+    capitulo: str | None = None
+    seccion: str | None = None
+    articulos: list[Articulo] = []
+
+    for bloque in raiz.iter("bloque"):
+        if bloque.get("id") in BLOQUES_EXCLUIDOS:
+            continue
+        version = bloque.findall("version")[-1]
+        parrafos = version.findall("p")
+
+        if bloque.get("tipo") == "encabezado":
+            for p in parrafos:
+                clase = p.get("class")
+                if clase == "titulo_num":
+                    titulo_ley, capitulo, seccion = _nivel(_texto(p)), None, None
+                elif clase == "capitulo_num":
+                    capitulo, seccion = _nivel(_texto(p)), None
+                elif clase == "seccion":
+                    seccion = _texto(p)
+            continue
+
+        if bloque.get("tipo") != "precepto":
+            continue
+
+        cabecera = next(_texto(p) for p in parrafos if p.get("class") == "articulo")
+        numero, titulo = parsear_cabecera(cabecera)
+        if not numero[0].isdigit():
+            titulo_ley = capitulo = seccion = None
+        texto = "\n".join(_texto(p) for p in parrafos if p.get("class") in CLASES_TEXTO)
+        articulos.append(
+            Articulo(
+                numero=numero,
+                titulo=titulo,
+                texto=texto,
+                titulo_ley=titulo_ley,
+                capitulo=capitulo,
+                seccion=seccion,
+            )
+        )
+    return articulos
