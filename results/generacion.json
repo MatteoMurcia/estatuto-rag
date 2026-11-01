@@ -2,21 +2,12 @@
   "resumen": {
     "hibrido": {
       "abstencion_correcta": 1.0,
-      "abstencion_indebida": 0.15151515151515152,
-      "citas_inventadas": 0.225,
-      "cita_correcta": 0.5454545454545454,
-      "fidelidad": 0.4642857142857143,
-      "correccion": 0.8181818181818182,
-      "p50_ms": 13638.336749994778
-    },
-    "hibrido+rerank": {
-      "abstencion_correcta": 1.0,
-      "abstencion_indebida": 0.15151515151515152,
-      "citas_inventadas": 0.2,
-      "cita_correcta": 0.6060606060606061,
-      "fidelidad": 0.5,
-      "correccion": 0.8181818181818182,
-      "p50_ms": 47200.80845001212
+      "abstencion_indebida": 0.18181818181818182,
+      "citas_inventadas": 0.025,
+      "cita_correcta": 0.696969696969697,
+      "fidelidad": 1.0,
+      "correccion": 0.7878787878787878,
+      "p50_ms": 14052.38759999338
     }
   },
   "detalle": {
@@ -31,10 +22,17 @@
         ],
         "citas_invalidas": [],
         "abstencion": false,
+        "fuentes": [
+          "14.1",
+          "11.2#3",
+          "11.3#2",
+          "11.3#1",
+          "14.3"
+        ],
         "cita_correcta": true,
         "fiel": true,
         "correcta": true,
-        "latencia_ms": 19238.06390000391
+        "latencia_ms": 19997.970700002043
       },
       {
         "id": "f02",
@@ -46,10 +44,17 @@
         ],
         "citas_invalidas": [],
         "abstencion": false,
+        "fuentes": [
+          "34.8#1",
+          "34.2",
+          "15.2#1",
+          "47.7#1",
+          "34.1"
+        ],
         "cita_correcta": true,
         "fiel": true,
         "correcta": true,
-        "latencia_ms": 13104.068500018911
+        "latencia_ms": 14391.738999984227
       },
       {
         "id": "f03",
@@ -61,40 +66,61 @@
         ],
         "citas_invalidas": [],
         "abstencion": false,
+        "fuentes": [
+          "34.3",
+          "34.2",
+          "34.4",
+          "12.4#1",
+          "35.2"
+        ],
         "cita_correcta": true,
         "fiel": true,
         "correcta": true,
-        "latencia_ms": 13479.209999990417
+        "latencia_ms": 16401.656100002583
       },
       {
         "id": "f04",
         "tipo": "factual",
         "pregunta": "¿Cuál es el número máximo de horas extraordinarias al año?",
-        "respuesta": "El número máximo de horas extraordinarias al año no puede ser superior a ochenta, salvo que se establezca lo contrario mediante convenio colectivo o contrato individual [art. 35.2].",
+        "respuesta": "El número máximo de horas extraordinarias al año no puede ser superior a ochenta, salvo que el Gobierno lo suprima o reduzca temporalmente [art. 35.2].",
         "citas": [
           "35.2"
         ],
         "citas_invalidas": [],
         "abstencion": false,
+        "fuentes": [
+          "35.2",
+          "35.1",
+          "35.3",
+          "12.5#1",
+          "12.5#2"
+        ],
         "cita_correcta": true,
         "fiel": true,
         "correcta": true,
-        "latencia_ms": 12992.453799990471
+        "latencia_ms": 15568.474599975161
       },
       {
         "id": "f05",
         "tipo": "factual",
         "pregunta": "¿Cuántos días de vacaciones anuales retribuidas corresponden como mínimo?",
         "respuesta": "Son 30 días naturales [art. 38.1].",
-        "citas": [],
-        "citas_invalidas": [
+        "citas": [
           "38.1"
         ],
+        "citas_invalidas": [],
         "abstencion": false,
-        "cita_correcta": false,
-        "fiel": false,
+        "fuentes": [
+          "38",
+          "37.1",
+          "37.3#1",
+          "15.2#1",
+          "dt8"
+        ],
+        "cita_correcta": true,
+        "fiel": true,
         "correcta": true,
-        "latencia_ms": 12278.000999998767
+        "latencia_ms": 12390.913000010187
       },
       {
         "id": "f06",
@@ -106,25 +132,39 @@
         ],
         "citas_invalidas": [],
         "abstencion": false,
+        "fuentes": [
+          "31",
+          "46.3#1",
+          "41.3",
+          "37.3#1",
+          "34.8#1"
+        ],
         "cita_correcta": true,
-        "fiel": false,
+        "fiel": true,
         "correcta": true,
-        "latencia_ms": 12762.418800004525
+        "latencia_ms": 12588.417599996319
       },
       {
         "id": "f07",
         "tipo": "factual",
         "pregunta": "¿A partir de qué edad se permite la admisión al trabajo?",
         "respuesta": "A partir de los dieciséis años se permite la admisión al trabajo [art. 6.1].",
-        "citas": [],
-        "citas_invalidas": [
+        "citas": [
           "6.1"
         ],
+        "citas_invalidas": [],
         "abstencion": false,
-        "cita_correcta": false,
-        "fiel": false,
+        "fuentes": [
+          "23.1",
+          "34.8#1",
+          "41.4#3",
+          "6",
+          "12.4#2"
+        ],
+        "cita_correcta": true,
+        "fiel": true,
         "correcta": true,
-        "latencia_ms": 12632.142500020564
+        "latencia_ms": 12667.711999994935
       },
       {
         "id": "f08",
@@ -136,25 +176,39 @@
         ],
         "citas_invalidas": [],
         "abstencion": false,
+        "fuentes": [
+          "36.1",
+          "36.4",
+          "36.3",
+          "36.2",
+          "36.5"
+        ],
         "cita_correcta": true,
         "fiel": true,
         "correcta": true,
-        "latencia_ms": 14303.234599996358
+        "latencia_ms": 12747.301600000355
       },
       {
         "id": "f09",
         "tipo": "factual",
         "pregunta": "¿Cuántos días de permiso retribuido corresponden por matrimonio?",
-        "respuesta": "Según el artículo 37.3 del Estatuto de los Trabajadores, la persona trabajadora tiene derecho a quince días naturales de permiso retribuido por matrimonio o registro de pareja de hecho [art. 37.3.a].",
-        "citas": [],
-        "citas_invalidas": [
-          "37.3.a"
+        "respuesta": "Según el artículo 37.3 [art. 37.3], el permiso retribuido por matrimonio o registro de pareja de hecho es de quince días naturales.",
+        "citas": [
+          "37.3"
         ],
+        "citas_invalidas": [],
         "abstencion": false,
-        "cita_correcta": false,
+        "fuentes": [
+          "38",
+          "37.3#1",
+          "48bis",
+          "dt7",
+          "37.1"
+        ],
+        "cita_correcta": true,
         "fiel": true,
         "correcta": true,
-        "latencia_ms": 13797.46349999914
+        "latencia_ms": 13531.792699999642
       },
       {
         "id": "f10",
@@ -166,10 +220,17 @@
         ],
         "citas_invalidas": [],
         "abstencion": false,
+        "fuentes": [
+          "37.1",
+          "34.4",
+          "48.5#1",
+          "37.4",
+          "48.4#2"
+        ],
         "cita_correcta": true,
-        "fiel": false,
+        "fiel": true,
         "correcta": true,
-        "latencia_ms": 15010.90139997541
+        "latencia_ms": 14130.012499983422
       },
       {
         "id": "f11",
@@ -181,10 +242,17 @@
         ],
         "citas_invalidas": [],
         "abstencion": false,
+        "fuentes": [
+          "dt11",
+          "56.1",
+          "53.5",
+          "56.5",
+          "33.2"
+        ],
         "cita_correcta": true,
         "fiel": true,
         "correcta": true,
-        "latencia_ms": 15461.033300001873
+        "latencia_ms": 14064.105899975402
       },
       {
         "id": "f12",
@@ -196,10 +264,17 @@
         ],
         "citas_invalidas": [],
         "abstencion": false,
+        "fuentes": [
+          "46.2",
+          "46.3#1",
+          "46.1",
+          "46.5",
+          "46.4"
+        ],
         "cita_correcta": true,
         "fiel": true,
         "correcta": true,
-        "latencia_ms": 12177.444400003878
+        "latencia_ms": 13292.262000002665
       },
       {
         "id": "f13",
@@ -211,10 +286,17 @@
         ],
         "citas_invalidas": [],
         "abstencion": false,
+        "fuentes": [
+          "46.3#1",
+          "48bis",
+          "37.6#1",
+          "34.8#1",
+          "46.3#2"
+        ],
         "cita_correcta": true,
         "fiel": true,
         "correcta": true,
-        "latencia_ms": 13945.577300008154
+        "latencia_ms": 14815.236299997196
       },
       {
         "id": "f14",
@@ -226,25 +308,39 @@
         ],
         "citas_invalidas": [],
         "abstencion": false,
+        "fuentes": [
+          "49.1#3",
+          "47.5",
+          "37.3#1",
+          "41.4#3",
+          "60"
+        ],
         "cita_correcta": true,
         "fiel": true,
         "correcta": true,
-        "latencia_ms": 14309.009799995692
+        "latencia_ms": 15017.155300010927
       },
       {
         "id": "f15",
         "tipo": "factual",
         "pregunta": "¿Cuál es la duración máxima del pacto de no competencia tras extinguirse el contrato para los técnicos?",
         "respuesta": "La duración máxima del pacto de no competencia tras extinguirse el contrato para los técnicos es de dos años [art. 21.2.b)].",
-        "citas": [],
-        "citas_invalidas": [
+        "citas": [
           "21.2.b)"
         ],
+        "citas_invalidas": [],
         "abstencion": false,
-        "cita_correcta": false,
-        "fiel": false,
+        "fuentes": [
+          "49.1#1",
+          "11.2#3",
+          "21",
+          "14.1",
+          "15.2#1"
+        ],
+        "cita_correcta": true,
+        "fiel": true,
         "correcta": true,
-        "latencia_ms": 13478.027099976316
+        "latencia_ms": 14470.043799985433
       },
       {
         "id": "p01",
@@ -254,10 +350,17 @@
         "citas": [],
         "citas_invalidas": [],
         "abstencion": true,
+        "fuentes": [
+          "34.8#1",
+          "30",
+          "23.3",
+          "36.1",
+          "33.11"
+        ],
         "cita_correcta": false,
         "fiel": null,
         "correcta": false,
-        "latencia_ms": 13373.004099994432
+        "latencia_ms": 14302.297499991255
       },
       {
         "id": "p02",
@@ -267,10 +370,17 @@
         "citas": [],
         "citas_invalidas": [],
         "abstencion": true,
+        "fuentes": [
+          "36.1",
+          "36.3",
+          "10",
+          "34.8#2",
+          "36.5"
+        ],
         "cita_correcta": false,
         "fiel": null,
         "correcta": false,
-        "latencia_ms": 1766.6293999936897
+        "latencia_ms": 1912.712699995609
       },
       {
         "id": "p03",
@@ -282,41 +392,63 @@
         ],
         "citas_invalidas": [],
         "abstencion": false,
+        "fuentes": [
+          "43",
+          "40.2#1",
+          "40.4",
+          "40.1#1",
+          "34.8#1"
+        ],
         "cita_correcta": true,
-        "fiel": false,
+        "fiel": true,
         "correcta": true,
-        "latencia_ms": 6468.5335000103805
+        "latencia_ms": 7066.237899998669
       },
       {
         "id": "p04",
         "tipo": "parafraseada",
         "pregunta": "Voy a tener un bebé, ¿cuánto tiempo puedo estar de baja?",
         "respuesta": "Podrías estar de baja por el tiempo indispensable para la realización de exámenes prenatales y técnicas de preparación al parto [art. 37.3.f]. Además, tienes derecho a un permiso parental para el cuidado de tu hijo, hija o menor acogido por tiempo superior a un año, hasta que cumpla ocho años, y este permiso tendrá una duración no superior a ocho semanas, continuas o discontinuas [art. 48 bis.1].",
-        "citas": [],
+        "citas": [
+          "37.3.f"
+        ],
         "citas_invalidas": [
-          "37.3.f",
           "48 bis.1"
         ],
         "abstencion": false,
+        "fuentes": [
+          "37.3#2",
+          "37.3#1",
+          "48bis",
+          "49.1#3",
+          "12.4#2"
+        ],
         "cita_correcta": false,
-        "fiel": false,
+        "fiel": true,
         "correcta": false,
-        "latencia_ms": 18839.738100010436
+        "latencia_ms": 17910.76209998573
       },
       {
         "id": "p05",
         "tipo": "parafraseada",
         "pregunta": "Se ha muerto un familiar mío, ¿me dan días libres?",
-        "respuesta": "Sí, tienes derecho a un permiso de dos días por el fallecimiento de un familiar, incluyendo tu cónyuge, pareja de hecho o parientes hasta el segundo grado de consanguinidad o afinidad. Si necesitas hacer un desplazamiento, el plazo se ampliará en dos días [art. 37.3.b bis].",
-        "citas": [],
-        "citas_invalidas": [
+        "respuesta": "Sí, tienes derecho a un permiso de dos días por el fallecimiento de un familiar, incluyendo el cónyuge, pareja de hecho o parientes hasta el segundo grado de consanguinidad o afinidad. Si necesitas hacer un desplazamiento, el plazo se ampliará en dos días [art. 37.3.b bis].",
+        "citas": [
           "37.3.b bis"
         ],
+        "citas_invalidas": [],
         "abstencion": false,
+        "fuentes": [
+          "37.3#1",
+          "37.6#1",
+          "dt8",
+          "37.3#2",
+          "37.1"
+        ],
         "cita_correcta": false,
-        "fiel": false,
+        "fiel": true,
         "correcta": true,
-        "latencia_ms": 15145.410700002685
+        "latencia_ms": 15740.030899993144
       },
       {
         "id": "p06",
@@ -328,10 +460,17 @@
         ],
         "citas_invalidas": [],
         "abstencion": false,
+        "fuentes": [
+          "29.1",
+          "27",
+          "dt8",
+          "29.3",
+          "33.1"
+        ],
         "cita_correcta": true,
         "fiel": true,
         "correcta": true,
-        "latencia_ms": 15586.228200001642
+        "latencia_ms": 14133.321100001922
       },
       {
         "id": "p07",
@@ -341,27 +480,41 @@
         "citas": [],
         "citas_invalidas": [],
         "abstencion": true,
+        "fuentes": [
+          "8.2",
+          "8.4",
+          "12.4#1",
+          "11.2#1",
+          "11.7"
+        ],
         "cita_correcta": false,
         "fiel": null,
         "correcta": false,
-        "latencia_ms": 14522.773299977416
+        "latencia_ms": 15422.750099998666
       },
       {
         "id": "p08",
         "tipo": "parafraseada",
         "pregunta": "Mi empresa va mal y quiere reducirme la jornada unos meses, ¿puede?",
-        "respuesta": "Sí, puede reducir la jornada si la causa es económica, técnica, organizativa o de producción [art. 47.7.a]. La empresa debe comunicar el período durante el cual se aplicará esta medida y priorizar la reducción de jornada frente a la suspensión de contratos [art. 47.7.a]. Además, la decisión debe ser notificada a la autoridad laboral y a los representantes de los trabajadores [art. 47.3].",
+        "respuesta": "Sí, puede reducir la jornada si la causa es económica, técnica, organizativa o de producción [art. 47.7]. La empresa debe comunicar el período durante el cual se aplicará esta medida y priorizar la reducción de jornada frente a la suspensión de contratos [art. 47.7.a]. Además, la decisión debe ser notificada a la autoridad laboral y a los representantes de los trabajadores [art. 47.3].",
         "citas": [
+          "47.7",
+          "47.7.a",
           "47.3"
         ],
-        "citas_invalidas": [
-          "47.7.a"
-        ],
+        "citas_invalidas": [],
         "abstencion": false,
+        "fuentes": [
+          "47.7#1",
+          "34.2",
+          "47.5",
+          "37.4",
+          "47.3#3"
+        ],
         "cita_correcta": false,
         "fiel": true,
         "correcta": true,
-        "latencia_ms": 6063.797800015891
+        "latencia_ms": 6741.018100001384
       },
       {
         "id": "p09",
@@ -373,26 +526,40 @@
         ],
         "citas_invalidas": [],
         "abstencion": false,
+        "fuentes": [
+          "37.8",
+          "39.2",
+          "41.4#3",
+          "53.1",
+          "7"
+        ],
         "cita_correcta": true,
-        "fiel": false,
+        "fiel": true,
         "correcta": true,
-        "latencia_ms": 16960.599000012735
+        "latencia_ms": 17426.768700010143
       },
       {
         "id": "p10",
         "tipo": "parafraseada",
         "pregunta": "La empresa no me paga el sueldo desde hace meses, ¿puedo irme con indemnización?",
-        "respuesta": "Sí, puedes considerar la extinción del contrato por causa justa, ya que la falta de pago o retrasos continuados en el abono del salario pactado es una causa justa para que el trabajador pueda solicitar la extinción del contrato [art. 50.b)]. Además, tendrás derecho a las indemnizaciones señaladas para el despido improcedente [art. 50.2].",
-        "citas": [],
-        "citas_invalidas": [
+        "respuesta": "Sí, puedes considerar la extinción del contrato por causa justa, ya que la falta de pago o retrasos continuados en el abono del salario pactado es una causa justa para que el trabajador pueda solicitar la extinción del contrato [art. 50.b)]. Además, tendrás derecho a las indemnizaciones por despido improcedente [art. 50.2].",
+        "citas": [
           "50.b)",
           "50.2"
         ],
+        "citas_invalidas": [],
         "abstencion": false,
-        "cita_correcta": false,
-        "fiel": false,
+        "fuentes": [
+          "49.1#3",
+          "dt11",
+          "50",
+          "33.11",
+          "33.2"
+        ],
+        "cita_correcta": true,
+        "fiel": true,
         "correcta": true,
-        "latencia_ms": 16655.804100009846
+        "latencia_ms": 16602.217300009215
       },
       {
         "id": "p11",
@@ -402,10 +569,17 @@
         "citas": [],
         "citas_invalidas": [],
         "abstencion": true,
+        "fuentes": [
+          "49.1#3",
+          "37.3#1",
+          "40.4",
+          "50",
+          "41.3"
+        ],
         "cita_correcta": false,
         "fiel": null,
         "correcta": false,
-        "latencia_ms": 13866.163999977289
+        "latencia_ms": 14040.66930001136
       },
       {
         "id": "p12",
@@ -415,10 +589,17 @@
         "citas": [],
         "citas_invalidas": [],
         "abstencion": true,
+        "fuentes": [
+          "56.5",
+          "dt11",
+          "51.2#2",
+          "51.2#1",
+          "82.3#3"
+        ],
         "cita_correcta": false,
         "fiel": null,
         "correcta": false,
-        "latencia_ms": 2239.839599991683
+        "latencia_ms": 2487.934100005077
       },
       {
         "id": "m01",
@@ -426,61 +607,86 @@
         "pregunta": "¿Qué diferencia hay entre la indemnización por despido objetivo y la del despido improcedente?",
         "respuesta": "La indemnización por despido objetivo se calcula de manera diferente a la del despido improcedente. En el caso del despido objetivo, la indemnización se calcula a razón de cuarenta y cinco días de salario por año de servicio para el tiempo anterior al 12 de febrero de 2012, y a razón de treinta y tres días de salario por año de servicio para el tiempo posterior, con un máximo de setecientos veinte días de salario [art. dt11.2]. Por otro lado, la indemnización por despido improcedente es de treinta y tres días de salario por año de servicio, prorrateándose por meses los periodos de tiempo inferiores a un año, hasta un máximo de veinticuatro mensualidades [art. 56.1].",
         "citas": [
+          "dt11.2",
           "56.1"
         ],
-        "citas_invalidas": [
-          "dt11.2"
-        ],
+        "citas_invalidas": [],
         "abstencion": false,
+        "fuentes": [
+          "dt11",
+          "56.1",
+          "53.5",
+          "53.4#2",
+          "56.5"
+        ],
         "cita_correcta": true,
         "fiel": true,
         "correcta": true,
-        "latencia_ms": 8147.690500016324
+        "latencia_ms": 8973.21909997845
       },
       {
         "id": "m02",
         "tipo": "multi",
         "pregunta": "¿Cuántas horas extra puedo hacer al año y cómo se compensan?",
-        "respuesta": "Según el artículo 35.2 del Estatuto de los Trabajadores, el número máximo de horas extraordinarias no puede ser superior a ochenta al año, salvo que se establezca lo contrario en un convenio colectivo. Además, para aquellos trabajadores que realizan una jornada inferior a la jornada general en la empresa, el número máximo de horas extraordinarias se reducirá en la misma proporción que exista entre sus jornadas. Estas horas extraordinarias, salvo que se pacte lo contrario, deben ser compensadas mediante descanso retribuido dentro de los cuatro meses siguientes a su realización [art. 35.2].",
+        "respuesta": "Según el artículo 35.2 del Estatuto de los Trabajadores, el número máximo de horas extraordinarias no puede ser superior a ochenta al año, salvo que se establezca lo contrario en un convenio colectivo. Además, para trabajadores con una jornada inferior a la general en la empresa, este límite se reducirá en proporción a la diferencia entre sus jornadas. Las horas extraordinarias realizadas se compensarán generalmente con tiempos equivalentes de descanso retribuido, a menos que se pacte otra forma de compensación en el convenio colectivo o en el contrato individual [art. 35.2].",
         "citas": [
           "35.2"
         ],
         "citas_invalidas": [],
         "abstencion": false,
+        "fuentes": [
+          "12.5#1",
+          "35.2",
+          "12.5#2",
+          "35.1",
+          "34.2"
+        ],
         "cita_correcta": true,
-        "fiel": false,
+        "fiel": true,
         "correcta": true,
-        "latencia_ms": 18100.576900003944
+        "latencia_ms": 19451.30240000435
       },
       {
         "id": "m03",
         "tipo": "multi",
         "pregunta": "Si me despiden por causas objetivas, ¿cuánto me indemnizan y cuánto tiempo tengo para impugnarlo?",
-        "respuesta": "Si te despiden por causas objetivas, la indemnización se calculará según lo establecido en el artículo 53.4, que indica que será de veinte días de salario por año de servicio, prorrateándose por meses los periodos de tiempo inferiores a un año y con un máximo de doce mensualidades [art. 53.4].\n\nEn cuanto al tiempo para impugnar el despido, no se especifica directamente en los artículos proporcionados. Sin embargo, puedes deducir que tienes el tiempo necesario para presentar la reclamación judicial, ya que la disposición no limita específicamente este plazo, lo que generalmente se entiende como el plazo legal para presentar demandas laborales [art. 53.4].",
-        "citas": [
-          "53.4"
-        ],
+        "respuesta": "Si te despiden por causas objetivas, la indemnización se calculará según lo establecido en el artículo 53.4 del Estatuto de los Trabajadores. No encuentro la respuesta en el Estatuto de los Trabajadores.",
+        "citas": [],
         "citas_invalidas": [],
-        "abstencion": false,
+        "abstencion": true,
+        "fuentes": [
+          "dt11",
+          "53.4#2",
+          "53.5",
+          "53.1",
+          "51.1#1"
+        ],
         "cita_correcta": false,
-        "fiel": false,
-        "correcta": true,
-        "latencia_ms": 21682.40700001479
+        "fiel": null,
+        "correcta": false,
+        "latencia_ms": 16185.375300003216
       },
       {
         "id": "m04",
         "tipo": "multi",
         "pregunta": "¿Cuál es la jornada máxima semanal y cuántas horas puedo trabajar como máximo en un día?",
-        "respuesta": "La jornada máxima semanal no puede exceder de 42 horas, y el número de horas ordinarias de trabajo efectivo no podrá ser superior a nueve diarias, salvo que por convenio colectivo o acuerdo entre la empresa y los representantes de los trabajadores se establezca otra distribución del tiempo de trabajo diario, siempre respetando el descanso entre jornadas [art. 34.3].",
+        "respuesta": "La jornada máxima semanal no puede exceder de 42 horas, y el número de horas ordinarias de trabajo efectivo no podrá ser superior a nueve diarias, salvo que por convenio colectivo o, en su defecto, acuerdo entre la empresa y los representantes de los trabajadores, se establezca otra distribución del tiempo de trabajo diario. [art. 34.3]",
         "citas": [
           "34.3"
         ],
         "citas_invalidas": [],
         "abstencion": false,
+        "fuentes": [
+          "36.1",
+          "34.3",
+          "34.2",
+          "35.2",
+          "34.8#1"
+        ],
         "cita_correcta": true,
-        "fiel": false,
+        "fiel": true,
         "correcta": true,
-        "latencia_ms": 15948.165699985111
+        "latencia_ms": 5548.212699999567
       },
       {
         "id": "m05",
@@ -493,10 +699,17 @@
         ],
         "citas_invalidas": [],
         "abstencion": false,
+        "fuentes": [
+          "14.1",
+          "11.3#2",
+          "14.3",
+          "11.3#1",
+          "11.2#3"
+        ],
         "cita_correcta": true,
-        "fiel": false,
+        "fiel": true,
         "correcta": true,
-        "latencia_ms": 14779.887999990024
+        "latencia_ms": 16375.312599993777
       },
       {
         "id": "m06",
@@ -506,10 +719,17 @@
         "citas": [],
         "citas_invalidas": [],
         "abstencion": false,
+        "fuentes": [
+          "46.3#1",
+          "46.2",
+          "37.6#1",
+          "dt7",
+          "48.4#2"
+        ],
         "cita_correcta": false,
-        "fiel": false,
+        "fiel": true,
         "correcta": true,
-        "latencia_ms": 16679.07029998605
+        "latencia_ms": 16371.843300003093
       },
       {
         "id": "u01",
@@ -519,10 +739,17 @@
         "citas": [],
         "citas_invalidas": [],
         "abstencion": true,
+        "fuentes": [
+          "27",
+          "32",
+          "26.1",
+          "33.2",
+          "33.1"
+        ],
         "cita_correcta": false,
         "fiel": null,
         "correcta": null,
-        "latencia_ms": 15427.155500015942
+        "latencia_ms": 13240.357300004689
       },
       {
         "id": "u02",
@@ -532,10 +759,17 @@
         "citas": [],
         "citas_invalidas": [],
         "abstencion": true,
+        "fuentes": [
+          "38",
+          "37.3#1",
+          "37.1",
+          "75.6",
+          "37.2"
+        ],
         "cita_correcta": false,
         "fiel": null,
         "correcta": null,
-        "latencia_ms": 2362.5773999956436
+        "latencia_ms": 2516.4296999864746
       },
       {
         "id": "u03",
@@ -545,10 +779,17 @@
         "citas": [],
         "citas_invalidas": [],
         "abstencion": true,
+        "fuentes": [
+          "27",
+          "84.3",
+          "85.3",
+          "15.8",
+          "12.4#1"
+        ],
         "cita_correcta": false,
         "fiel": null,
         "correcta": null,
-        "latencia_ms": 1958.3945000194944
+        "latencia_ms": 2067.7349000179674
       },
       {
         "id": "u04",
@@ -558,10 +799,17 @@
         "citas": [],
         "citas_invalidas": [],
         "abstencion": true,
+        "fuentes": [
+          "37.3#1",
+          "48bis",
+          "33.11",
+          "49.1#1",
+          "37.3#2"
+        ],
         "cita_correcta": false,
         "fiel": null,
         "correcta": null,
-        "latencia_ms": 2874.0116999833845
+        "latencia_ms": 3037.1258000086527
       },
       {
         "id": "u05",
@@ -571,10 +819,17 @@
         "citas": [],
         "citas_invalidas": [],
         "abstencion": true,
+        "fuentes": [
+          "49.1#3",
+          "2",
+          "47.7#2",
+          "47.5",
+          "37.8"
+        ],
         "cita_correcta": false,
         "fiel": null,
         "correcta": null,
-        "latencia_ms": 2805.8851000096183
+        "latencia_ms": 2873.3099999953993
       },
       {
         "id": "u06",
@@ -584,10 +839,17 @@
         "citas": [],
         "citas_invalidas": [],
         "abstencion": true,
+        "fuentes": [
+          "48bis",
+          "37.3#1",
+          "dt7",
+          "37.7",
+          "37.5"
+        ],
         "cita_correcta": false,
         "fiel": null,
         "correcta": null,
-        "latencia_ms": 2404.014300002018
+        "latencia_ms": 2529.1128999961074
       },
       {
         "id": "u07",
@@ -597,598 +859,17 @@
         "citas": [],
         "citas_invalidas": [],
         "abstencion": true,
+        "fuentes": [
+          "12.6",
+          "da10.1",
+          "12.7",
+          "12.8",
+          "da10.2#1"
+        ],
         "cita_correcta": false,
         "fiel": null,
         "correcta": null,
-        "latencia_ms": 2414.483900007326
-      }
-    ],
-    "hibrido+rerank": [
-      {
-        "id": "f01",
-        "tipo": "factual",
-        "pregunta": "¿Cuál es la duración máxima del periodo de prueba para los técnicos titulados?",
-        "respuesta": "La duración máxima del periodo de prueba para los técnicos titulados no puede exceder de seis meses [art. 14.1].",
-        "citas": [
-          "14.1"
-        ],
-        "citas_invalidas": [],
-        "abstencion": false,
-        "cita_correcta": true,
-        "fiel": true,
-        "correcta": true,
-        "latencia_ms": 47581.898200005526
-      },
-      {
-        "id": "f02",
-        "tipo": "factual",
-        "pregunta": "¿Cuál es la duración máxima de la jornada ordinaria de trabajo?",
-        "respuesta": "La duración máxima de la jornada ordinaria de trabajo es de cuarenta horas semanales de trabajo efectivo de promedio en cómputo anual [art. 34.1].",
-        "citas": [
-          "34.1"
-        ],
-        "citas_invalidas": [],
-        "abstencion": false,
-        "cita_correcta": true,
-        "fiel": true,
-        "correcta": true,
-        "latencia_ms": 51155.975300003774
-      },
-      {
-        "id": "f03",
-        "tipo": "factual",
-        "pregunta": "¿Cuántas horas deben mediar como mínimo entre el final de una jornada y el comienzo de la siguiente?",
-        "respuesta": "Deben mediar como mínimo doce horas entre el final de una jornada y el comienzo de la siguiente [art. 34.3].",
-        "citas": [
-          "34.3"
-        ],
-        "citas_invalidas": [],
-        "abstencion": false,
-        "cita_correcta": true,
-        "fiel": true,
-        "correcta": true,
-        "latencia_ms": 46914.25689999596
-      },
-      {
-        "id": "f04",
-        "tipo": "factual",
-        "pregunta": "¿Cuál es el número máximo de horas extraordinarias al año?",
-        "respuesta": "El número máximo de horas extraordinarias al año no puede ser superior a ochenta, salvo que se establezca otra cosa mediante convenio colectivo o contrato individual. [art. 35.2]",
-        "citas": [
-          "35.2"
-        ],
-        "citas_invalidas": [],
-        "abstencion": false,
-        "cita_correcta": true,
-        "fiel": true,
-        "correcta": true,
-        "latencia_ms": 47115.80949998461
-      },
-      {
-        "id": "f05",
-        "tipo": "factual",
-        "pregunta": "¿Cuántos días de vacaciones anuales retribuidas corresponden como mínimo?",
-        "respuesta": "Son 30 días naturales [art. 38.1].",
-        "citas": [],
-        "citas_invalidas": [
-          "38.1"
-        ],
-        "abstencion": false,
-        "cita_correcta": false,
-        "fiel": false,
-        "correcta": true,
-        "latencia_ms": 46008.809899998596
-      },
-      {
-        "id": "f06",
-        "tipo": "factual",
-        "pregunta": "¿Cuántas gratificaciones extraordinarias al año tiene derecho a percibir el trabajador?",
-        "respuesta": "El trabajador tiene derecho a percibir dos gratificaciones extraordinarias al año [art. 31].",
-        "citas": [
-          "31"
-        ],
-        "citas_invalidas": [],
-        "abstencion": false,
-        "cita_correcta": true,
-        "fiel": true,
-        "correcta": true,
-        "latencia_ms": 47560.668199992506
-      },
-      {
-        "id": "f07",
-        "tipo": "factual",
-        "pregunta": "¿A partir de qué edad se permite la admisión al trabajo?",
-        "respuesta": "A partir de los 16 años se permite la admisión al trabajo [art. 6.1].",
-        "citas": [],
-        "citas_invalidas": [
-          "6.1"
-        ],
-        "abstencion": false,
-        "cita_correcta": false,
-        "fiel": false,
-        "correcta": true,
-        "latencia_ms": 47284.70310001285
-      },
-      {
-        "id": "f08",
-        "tipo": "factual",
-        "pregunta": "¿Qué horario se considera trabajo nocturno?",
-        "respuesta": "El trabajo nocturno se considera el realizado entre las diez de la noche y las seis de la mañana [art. 36.1].",
-        "citas": [
-          "36.1"
-        ],
-        "citas_invalidas": [],
-        "abstencion": false,
-        "cita_correcta": true,
-        "fiel": true,
-        "correcta": true,
-        "latencia_ms": 46449.91409999784
-      },
-      {
-        "id": "f09",
-        "tipo": "factual",
-        "pregunta": "¿Cuántos días de permiso retribuido corresponden por matrimonio?",
-        "respuesta": "Son 15 días naturales [art. 37.3.a].",
-        "citas": [],
-        "citas_invalidas": [
-          "37.3.a"
-        ],
-        "abstencion": false,
-        "cita_correcta": false,
-        "fiel": false,
-        "correcta": true,
-        "latencia_ms": 48900.42920000269
-      },
-      {
-        "id": "f10",
-        "tipo": "factual",
-        "pregunta": "¿Cuál es la duración mínima del descanso semanal?",
-        "respuesta": "La duración mínima del descanso semanal es de un día y medio ininterrumpido, que generalmente comprenderá la tarde del sábado o, en su caso, la mañana del lunes y el día completo del domingo. [art. 37.1]",
-        "citas": [
-          "37.1"
-        ],
-        "citas_invalidas": [],
-        "abstencion": false,
-        "cita_correcta": true,
-        "fiel": false,
-        "correcta": true,
-        "latencia_ms": 49861.34949998814
-      },
-      {
-        "id": "f11",
-        "tipo": "factual",
-        "pregunta": "¿Cuál es la indemnización por despido improcedente?",
-        "respuesta": "La indemnización por despido improcedente es de treinta y tres días de salario por año de servicio por el tiempo de prestación de servicios posterior al 12 de febrero de 2012, prorrateándose por meses los periodos de tiempo inferiores a un año. [art. 56.1]",
-        "citas": [
-          "56.1"
-        ],
-        "citas_invalidas": [],
-        "abstencion": false,
-        "cita_correcta": true,
-        "fiel": false,
-        "correcta": true,
-        "latencia_ms": 44948.2907000056
-      },
-      {
-        "id": "f12",
-        "tipo": "factual",
-        "pregunta": "¿Cuánto puede durar la excedencia voluntaria?",
-        "respuesta": "La excedencia voluntaria puede durar un plazo no menor a cuatro meses y no mayor a cinco años. [art. 46.2]",
-        "citas": [
-          "46.2"
-        ],
-        "citas_invalidas": [],
-        "abstencion": false,
-        "cita_correcta": true,
-        "fiel": true,
-        "correcta": true,
-        "latencia_ms": 48490.855100011686
-      },
-      {
-        "id": "f13",
-        "tipo": "factual",
-        "pregunta": "¿Cuánto tiempo puede durar como máximo la excedencia por cuidado de cada hijo?",
-        "respuesta": "La excedencia por cuidado de cada hijo puede durar como máximo tres años [art. 46.3].",
-        "citas": [
-          "46.3"
-        ],
-        "citas_invalidas": [],
-        "abstencion": false,
-        "cita_correcta": true,
-        "fiel": true,
-        "correcta": true,
-        "latencia_ms": 48641.85039998847
-      },
-      {
-        "id": "f14",
-        "tipo": "factual",
-        "pregunta": "¿En qué plazo prescriben las faltas muy graves de los trabajadores?",
-        "respuesta": "Las faltas muy graves de los trabajadores prescribirán a los sesenta días a partir de la fecha en que la empresa tuvo conocimiento de su comisión [art. 60.2].",
-        "citas": [],
-        "citas_invalidas": [
-          "60.2"
-        ],
-        "abstencion": false,
-        "cita_correcta": false,
-        "fiel": true,
-        "correcta": true,
-        "latencia_ms": 47116.91380001139
-      },
-      {
-        "id": "f15",
-        "tipo": "factual",
-        "pregunta": "¿Cuál es la duración máxima del pacto de no competencia tras extinguirse el contrato para los técnicos?",
-        "respuesta": "La duración máxima del pacto de no competencia tras extinguirse el contrato para los técnicos es de dos años [art. 21.2].",
-        "citas": [],
-        "citas_invalidas": [
-          "21.2"
-        ],
-        "abstencion": false,
-        "cita_correcta": false,
-        "fiel": true,
-        "correcta": true,
-        "latencia_ms": 47997.52079998143
-      },
-      {
-        "id": "p01",
-        "tipo": "parafraseada",
-        "pregunta": "Me han echado por llegar tarde muchas veces, ¿pueden hacerlo?",
-        "respuesta": "No encuentro la respuesta en el Estatuto de los Trabajadores.",
-        "citas": [],
-        "citas_invalidas": [],
-        "abstencion": true,
-        "cita_correcta": false,
-        "fiel": null,
-        "correcta": false,
-        "latencia_ms": 45946.07669999823
-      },
-      {
-        "id": "p02",
-        "tipo": "parafraseada",
-        "pregunta": "Mi jefe me escribe por WhatsApp a las once de la noche, ¿tengo que contestar?",
-        "respuesta": "No encuentro la respuesta en el Estatuto de los Trabajadores.",
-        "citas": [],
-        "citas_invalidas": [],
-        "abstencion": true,
-        "cita_correcta": false,
-        "fiel": null,
-        "correcta": false,
-        "latencia_ms": 39448.29800000298
-      },
-      {
-        "id": "p03",
-        "tipo": "parafraseada",
-        "pregunta": "Mi empresa quiere mandarme a trabajar a otra ciudad, ¿puede hacerlo?",
-        "respuesta": "Sí, tu empresa puede hacerlo si hay razones económicas, técnicas, organizativas o de producción que lo justifiquen [art. 40.1]. Además, el trabajador debe ser informado con una antelación mínima de cinco días laborables si el desplazamiento es de más de tres meses, y en este caso tiene derecho a un permiso de cuatro días laborables cada tres meses [art. 40.6].",
-        "citas": [
-          "40.1",
-          "40.6"
-        ],
-        "citas_invalidas": [],
-        "abstencion": false,
-        "cita_correcta": true,
-        "fiel": false,
-        "correcta": true,
-        "latencia_ms": 39934.77829999756
-      },
-      {
-        "id": "p04",
-        "tipo": "parafraseada",
-        "pregunta": "Voy a tener un bebé, ¿cuánto tiempo puedo estar de baja?",
-        "respuesta": "Podrías estar de baja durante diecinueve semanas por el nacimiento, según el artículo 48.4 [art. 48.4].",
-        "citas": [
-          "48.4"
-        ],
-        "citas_invalidas": [],
-        "abstencion": false,
-        "cita_correcta": true,
-        "fiel": false,
-        "correcta": true,
-        "latencia_ms": 48080.0581999938
-      },
-      {
-        "id": "p05",
-        "tipo": "parafraseada",
-        "pregunta": "Se ha muerto un familiar mío, ¿me dan días libres?",
-        "respuesta": "Sí, tienes derecho a ausentarte del trabajo por el fallecimiento de un familiar. Según el artículo 37.3.b bis), podrás ausentarte durante dos días laborables, y si necesitas desplazarte, se ampliará el permiso en dos días más [art. 37.3.b bis].",
-        "citas": [],
-        "citas_invalidas": [
-          "37.3.b bis"
-        ],
-        "abstencion": false,
-        "cita_correcta": false,
-        "fiel": true,
-        "correcta": true,
-        "latencia_ms": 50845.68379999837
-      },
-      {
-        "id": "p06",
-        "tipo": "parafraseada",
-        "pregunta": "¿Cada cuánto me tienen que pagar la nómina?",
-        "respuesta": "Según el Estatuto de los Trabajadores, el periodo de tiempo a que se refiere el abono de las retribuciones periódicas y regulares no podrá exceder de un mes [art. 29.1].",
-        "citas": [
-          "29.1"
-        ],
-        "citas_invalidas": [],
-        "abstencion": false,
-        "cita_correcta": true,
-        "fiel": false,
-        "correcta": true,
-        "latencia_ms": 49444.06470001559
-      },
-      {
-        "id": "p07",
-        "tipo": "parafraseada",
-        "pregunta": "¿Me tienen que dar el contrato firmado en papel?",
-        "respuesta": "No encuentro la respuesta en el Estatuto de los Trabajadores.",
-        "citas": [],
-        "citas_invalidas": [],
-        "abstencion": true,
-        "cita_correcta": false,
-        "fiel": null,
-        "correcta": false,
-        "latencia_ms": 45274.56329998677
-      },
-      {
-        "id": "p08",
-        "tipo": "parafraseada",
-        "pregunta": "Mi empresa va mal y quiere reducirme la jornada unos meses, ¿puede?",
-        "respuesta": "Sí, tu empresa puede reducir tu jornada temporalmente por causas económicas, técnicas, organizativas o de producción [art. 47.1]. Sin embargo, el procedimiento debe seguirse correctamente, incluyendo la comunicación a la representación de las personas trabajadoras y la solicitud a la autoridad laboral [art. 47.5].",
-        "citas": [
-          "47.1",
-          "47.5"
-        ],
-        "citas_invalidas": [],
-        "abstencion": false,
-        "cita_correcta": true,
-        "fiel": false,
-        "correcta": true,
-        "latencia_ms": 38932.00999998953
-      },
-      {
-        "id": "p09",
-        "tipo": "parafraseada",
-        "pregunta": "Me quieren poner a hacer tareas de una categoría inferior, ¿es legal?",
-        "respuesta": "Según el artículo 39.2 del Estatuto de los Trabajadores, la movilidad funcional para realizar funciones inferiores a las del grupo profesional solo será posible si existen razones técnicas u organizativas que la justifiquen y por el tiempo imprescindible para su atención. Por lo tanto, si no hay razones técnicas u organizativas válidas, o si la movilidad excede el tiempo imprescindible, podría considerarse ilegal [art. 39.2].",
-        "citas": [
-          "39.2"
-        ],
-        "citas_invalidas": [],
-        "abstencion": false,
-        "cita_correcta": true,
-        "fiel": false,
-        "correcta": true,
-        "latencia_ms": 50292.13560000062
-      },
-      {
-        "id": "p10",
-        "tipo": "parafraseada",
-        "pregunta": "La empresa no me paga el sueldo desde hace meses, ¿puedo irme con indemnización?",
-        "respuesta": "Sí, puedes considerar la posibilidad de solicitar la extinción del contrato por falta de pago de sueldos, ya que el retraso en el pago del salario supera los 15 días y se han producido retrasos continuados durante un período de un año, con un total de tres mensualidades completas de salario adeudadas [art. 50.1.b]. En este caso, tendrías derecho a las indemnizaciones señaladas para el despido improcedente [art. 56] y podrías optar por la readmisión o la indemnización [art. 56.1].",
-        "citas": [
-          "56",
-          "56.1"
-        ],
-        "citas_invalidas": [
-          "50.1.b"
-        ],
-        "abstencion": false,
-        "cita_correcta": false,
-        "fiel": false,
-        "correcta": true,
-        "latencia_ms": 53982.8567999939
-      },
-      {
-        "id": "p11",
-        "tipo": "parafraseada",
-        "pregunta": "Quiero dejar el trabajo, ¿con cuánta antelación tengo que avisar?",
-        "respuesta": "Según el Estatuto de los Trabajadores, debes avisar con una antelación mínima de quince días [art. 53.1.c].",
-        "citas": [],
-        "citas_invalidas": [
-          "53.1.c"
-        ],
-        "abstencion": false,
-        "cita_correcta": false,
-        "fiel": false,
-        "correcta": false,
-        "latencia_ms": 48860.83720001625
-      },
-      {
-        "id": "p12",
-        "tipo": "parafraseada",
-        "pregunta": "Me han despedido y no estoy de acuerdo, ¿cuánto tiempo tengo para reclamar?",
-        "respuesta": "No encuentro la respuesta en el Estatuto de los Trabajadores.",
-        "citas": [],
-        "citas_invalidas": [],
-        "abstencion": true,
-        "cita_correcta": false,
-        "fiel": null,
-        "correcta": false,
-        "latencia_ms": 47301.42529998557
-      },
-      {
-        "id": "m01",
-        "tipo": "multi",
-        "pregunta": "¿Qué diferencia hay entre la indemnización por despido objetivo y la del despido improcedente?",
-        "respuesta": "La indemnización por despido objetivo se calcula de manera diferente según el tiempo de servicio del trabajador, mientras que la indemnización por despido improcedente es de 33 días de salario por año de servicio, con un máximo de 24 mensualidades [art. 56.1].",
-        "citas": [
-          "56.1"
-        ],
-        "citas_invalidas": [],
-        "abstencion": false,
-        "cita_correcta": true,
-        "fiel": false,
-        "correcta": true,
-        "latencia_ms": 36412.16100001475
-      },
-      {
-        "id": "m02",
-        "tipo": "multi",
-        "pregunta": "¿Cuántas horas extra puedo hacer al año y cómo se compensan?",
-        "respuesta": "Según el Estatuto de los Trabajadores, el número máximo de horas extraordinarias que puedes realizar al año es de ochenta, salvo que por la modalidad o duración de tu contrato realices una jornada en cómputo anual inferior a la jornada general en la empresa. En ese caso, el número máximo se reducirá en la misma proporción que exista entre tales jornadas [art. 35.2].\n\nEstas horas extraordinarias se compensarán generalmente mediante descanso retribuido dentro de los cuatro meses siguientes a su realización, a menos que se pacte otra forma de compensación [art. 35.1].",
-        "citas": [
-          "35.2",
-          "35.1"
-        ],
-        "citas_invalidas": [],
-        "abstencion": false,
-        "cita_correcta": true,
-        "fiel": false,
-        "correcta": true,
-        "latencia_ms": 50349.89839998889
-      },
-      {
-        "id": "m03",
-        "tipo": "multi",
-        "pregunta": "Si me despiden por causas objetivas, ¿cuánto me indemnizan y cuánto tiempo tengo para impugnarlo?",
-        "respuesta": "Si te despiden por causas objetivas, la indemnización se calculará según lo establecido en el artículo 53.4, que indica que será de veinte días de salario por año de servicio, prorrateándose por meses los periodos de tiempo inferiores a un año y con un máximo de doce mensualidades [art. 53.4].\n\nEn cuanto al tiempo para impugnar el despido, no se especifica directamente en los artículos proporcionados el plazo exacto para hacerlo. No encuentro la respuesta en el Estatuto de los Trabajadores.",
-        "citas": [
-          "53.4"
-        ],
-        "citas_invalidas": [],
-        "abstencion": true,
-        "cita_correcta": false,
-        "fiel": null,
-        "correcta": false,
-        "latencia_ms": 51437.97830000403
-      },
-      {
-        "id": "m04",
-        "tipo": "multi",
-        "pregunta": "¿Cuál es la jornada máxima semanal y cuántas horas puedo trabajar como máximo en un día?",
-        "respuesta": "La jornada máxima semanal de trabajo es de cuarenta horas de trabajo efectivo de promedio en cómputo anual [art. 34.1]. Como máximo, puedes trabajar nueve horas diarias, salvo que se establezca otra distribución del tiempo de trabajo diario por convenio colectivo o acuerdo entre la empresa y los representantes de los trabajadores [art. 34.3].",
-        "citas": [
-          "34.1",
-          "34.3"
-        ],
-        "citas_invalidas": [],
-        "abstencion": false,
-        "cita_correcta": true,
-        "fiel": true,
-        "correcta": true,
-        "latencia_ms": 40060.42369999341
-      },
-      {
-        "id": "m05",
-        "tipo": "multi",
-        "pregunta": "¿Cuánto dura el periodo de prueba de un técnico titulado y cuenta ese tiempo para la antigüedad?",
-        "respuesta": "El periodo de prueba para un técnico titulado no puede exceder de seis meses [art. 14.1]. Transcurrido el periodo de prueba sin desistimiento, el contrato producirá plenos efectos, computándose el tiempo de los servicios prestados en la antigüedad de la persona trabajadora en la empresa [art. 14.3].",
-        "citas": [
-          "14.1",
-          "14.3"
-        ],
-        "citas_invalidas": [],
-        "abstencion": false,
-        "cita_correcta": true,
-        "fiel": true,
-        "correcta": true,
-        "latencia_ms": 48328.25309998589
-      },
-      {
-        "id": "m06",
-        "tipo": "multi",
-        "pregunta": "¿Qué diferencia de duración hay entre la excedencia voluntaria y la excedencia por cuidado de hijos?",
-        "respuesta": "La excedencia voluntaria tiene una duración máxima de cinco años, mientras que la excedencia para cuidado de hijos no supera los tres años [art. 46.3].",
-        "citas": [
-          "46.3"
-        ],
-        "citas_invalidas": [],
-        "abstencion": false,
-        "cita_correcta": true,
-        "fiel": true,
-        "correcta": true,
-        "latencia_ms": 50348.57020000345
-      },
-      {
-        "id": "u01",
-        "tipo": "sin_respuesta",
-        "pregunta": "¿Cuál es el importe del salario mínimo interprofesional en 2026?",
-        "respuesta": "No encuentro la respuesta en el Estatuto de los Trabajadores.",
-        "citas": [],
-        "citas_invalidas": [],
-        "abstencion": true,
-        "cita_correcta": false,
-        "fiel": null,
-        "correcta": null,
-        "latencia_ms": 47004.77799997316
-      },
-      {
-        "id": "u02",
-        "tipo": "sin_respuesta",
-        "pregunta": "¿Cuántos días de vacaciones tiene un funcionario público?",
-        "respuesta": "No encuentro la respuesta en el Estatuto de los Trabajadores.",
-        "citas": [],
-        "citas_invalidas": [],
-        "abstencion": true,
-        "cita_correcta": false,
-        "fiel": null,
-        "correcta": null,
-        "latencia_ms": 38779.097899998305
-      },
-      {
-        "id": "u03",
-        "tipo": "sin_respuesta",
-        "pregunta": "¿Cuánto cobra un camarero según el convenio de hostelería de Madrid?",
-        "respuesta": "No encuentro la respuesta en el Estatuto de los Trabajadores.",
-        "citas": [],
-        "citas_invalidas": [],
-        "abstencion": true,
-        "cita_correcta": false,
-        "fiel": null,
-        "correcta": null,
-        "latencia_ms": 33683.95710000186
-      },
-      {
-        "id": "u04",
-        "tipo": "sin_respuesta",
-        "pregunta": "¿Durante cuánto tiempo puedo cobrar el paro?",
-        "respuesta": "No encuentro la respuesta en el Estatuto de los Trabajadores.",
-        "citas": [],
-        "citas_invalidas": [],
-        "abstencion": true,
-        "cita_correcta": false,
-        "fiel": null,
-        "correcta": null,
-        "latencia_ms": 40049.90680000628
-      },
-      {
-        "id": "u05",
-        "tipo": "sin_respuesta",
-        "pregunta": "¿Qué pena establece el Código Penal para el acoso laboral?",
-        "respuesta": "No encuentro la respuesta en el Estatuto de los Trabajadores.",
-        "citas": [],
-        "citas_invalidas": [],
-        "abstencion": true,
-        "cita_correcta": false,
-        "fiel": null,
-        "correcta": null,
-        "latencia_ms": 38970.926099980716
-      },
-      {
-        "id": "u06",
-        "tipo": "sin_respuesta",
-        "pregunta": "¿Cuántos días de permiso me corresponden por el cumpleaños de mi hijo?",
-        "respuesta": "No encuentro la respuesta en el Estatuto de los Trabajadores.",
-        "citas": [],
-        "citas_invalidas": [],
-        "abstencion": true,
-        "cita_correcta": false,
-        "fiel": null,
-        "correcta": null,
-        "latencia_ms": 38437.3845999944
-      },
-      {
-        "id": "u07",
-        "tipo": "sin_respuesta",
-        "pregunta": "¿Cómo se calcula la pensión de jubilación?",
-        "respuesta": "No encuentro la respuesta en el Estatuto de los Trabajadores.",
-        "citas": [],
-        "citas_invalidas": [],
-        "abstencion": true,
-        "cita_correcta": false,
-        "fiel": null,
-        "correcta": null,
-        "latencia_ms": 35964.03920001467
+        "latencia_ms": 2496.53330000001
       }
     ]
   }
