@@ -34,6 +34,7 @@ def test_formatear_contexto_usa_etiquetas_con_id() -> None:
 def test_extraer_citas_unicas_y_en_orden() -> None:
     texto = "Son 30 días [art. 38.1]. Se pactan [art. 38.2, 38.1]. Ver también [art. 38.1]."
     assert extraer_citas(texto) == ["38.1", "38.2"]
+    assert extraer_citas("Permiso parental [art. 48 bis.1].") == ["48bis.1"]
 
 
 def test_es_abstencion() -> None:
@@ -80,3 +81,15 @@ def test_responder_detecta_abstencion() -> None:
     r = responder("¿salario de un piloto?", RecuperadorFijo([_r("38", "1")]), LLMFijo(ABSTENCION))
     assert r.abstencion
     assert r.citas == []
+
+
+def test_cita_valida_acepta_mas_detalle_que_el_chunk() -> None:
+    from estatuto_rag.generation.citas import cita_valida
+
+    entero, apartado = _r("38", None), _r("54", "2")
+    assert cita_valida("38.1", [entero])  # el artículo 38 entero contiene el 38.1
+    assert cita_valida("54.2.a", [apartado])
+    assert cita_valida("54", [apartado])  # citar el artículo del apartado recuperado
+    assert not cita_valida("54.3", [apartado])  # otro apartado: no estaba en el contexto
+    assert not cita_valida("3", [entero])  # '3' no es prefijo de '38'
+    assert not cita_valida("38", [_r("38bis", None)])

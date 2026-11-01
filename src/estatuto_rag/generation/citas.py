@@ -27,10 +27,22 @@ def extraer_citas(texto: str) -> list[str]:
     citas: list[str] = []
     for grupo in CITA.findall(texto):
         for cita in grupo.split(","):
-            cita = cita.strip()
+            # "48 bis.1" → "48bis.1": así se llaman los chunks.
+            cita = re.sub(r"(\d+)\s+(bis|ter|quater)\b", r"\1\2", cita.strip())
             if cita and cita not in citas:
                 citas.append(cita)
     return citas
+
+
+def cita_valida(cita: str, fuentes: list[Resultado]) -> bool:
+    """¿Sale la cita del contexto? Acepta citar con más detalle que el chunk recuperado:
+    con el 38 entero en el contexto, '[art. 38.1]' es válida; con el 54.2, '54.2.a' también.
+    """
+    for f in fuentes:
+        base = id_cita(f)
+        if cita == f.articulo or cita == base or cita.startswith((base + ".", base + " ")):
+            return True
+    return False
 
 
 def es_abstencion(texto: str) -> bool:

@@ -47,6 +47,36 @@ jobs:
       - name: Tests
         run: uv run pytest --cov=estatuto_rag --cov-report=term-missing
 
+  evals:
+    # Gate de calidad: con los embeddings bge-m3 precalculados (sin Ollama ni GPU), el PR
+    # falla si el hit@5 del híbrido baja del umbral. Primeros resultados: 0.85 (28/33).
+    runs-on: ubuntu-latest
+    services:
+      db:
+        image: pgvector/pgvector:pg17
+        env:
+          POSTGRES_USER: estatuto
+          POSTGRES_PASSWORD: estatuto
+          POSTGRES_DB: estatuto
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U estatuto -d estatuto"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgresql://estatuto:estatuto@localhost:5432/estatuto
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - run: uv sync --locked
+      - name: Gate de recuperación (hit@5 del híbrido >= 0.80)
+        run: uv run python -m estatuto_rag.evals --solo-cache --min-hit5 0.80
+      - name: Tabla en el resumen del job
+        if: always()
+        run: cat results/recuperacion.md >> "$GITHUB_STEP_SUMMARY" || true
+
   secrets:
     runs-on: ubuntu-latest
     steps:
