@@ -4,7 +4,17 @@ version = "0.1.0"
 description = "RAG sobre el Estatuto de los Trabajadores con búsqueda híbrida, citas por artículo y evaluación en CI"
 readme = "README.md"
 requires-python = ">=3.12,<3.13"
-dependencies = []
+dependencies = [
+    "fastapi>=0.115",
+    "httpx>=0.28",
+    "pgvector>=0.3",
+    "psycopg[binary]>=3.2",
+    "uvicorn>=0.32",
+]
+
+[project.optional-dependencies]
+# El reranker trae torch (~1 GB): opcional para que la CI no lo instale.
+rerank = ["sentence-transformers>=3.3"]
 
 [dependency-groups]
 dev = [
@@ -42,3 +52,7 @@ markers = [
 python_version = "3.12"
 strict = true
 files = ["src"]
+
+[[tool.mypy.overrides]]
+module = ["sentence_transformers.*"]
+ignore_missing_imports = true

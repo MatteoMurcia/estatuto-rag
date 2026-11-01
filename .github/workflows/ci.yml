@@ -24,6 +24,22 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
+    services:
+      db:
+        image: pgvector/pgvector:pg17
+        env:
+          POSTGRES_USER: estatuto
+          POSTGRES_PASSWORD: estatuto
+          POSTGRES_DB: estatuto
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U estatuto -d estatuto"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgresql://estatuto:estatuto@localhost:5432/estatuto
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v5

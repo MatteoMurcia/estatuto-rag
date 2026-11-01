@@ -28,3 +28,13 @@ def guardar_jsonl(chunks: list[Chunk], ruta: Path) -> None:
         for chunk in chunks:
             fila = asdict(chunk) | {"texto_indexado": chunk.texto_indexado}
             f.write(json.dumps(fila, ensure_ascii=False) + "\n")
+
+
+def leer_jsonl(ruta: Path) -> list[Chunk]:
+    chunks = []
+    with ruta.open(encoding="utf-8") as f:
+        for linea in f:
+            fila = json.loads(linea)
+            fila.pop("texto_indexado")  # es una propiedad calculada, no un campo
+            chunks.append(Chunk(**fila))
+    return chunks

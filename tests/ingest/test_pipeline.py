@@ -7,7 +7,7 @@ import pytest
 
 from estatuto_rag.ingest.chunking import MAX_TOKENS, contar_tokens
 from estatuto_rag.ingest.models import Chunk
-from estatuto_rag.ingest.pipeline import XML_BOE, construir_chunks, guardar_jsonl
+from estatuto_rag.ingest.pipeline import XML_BOE, construir_chunks, guardar_jsonl, leer_jsonl
 
 
 @pytest.fixture(scope="module")
@@ -43,3 +43,10 @@ def test_guardar_jsonl(chunks: list[Chunk], tmp_path: Path) -> None:
     filas = [json.loads(linea) for linea in ruta.read_text(encoding="utf-8").splitlines()]
     assert [f["id"] for f in filas] == [c.id for c in chunks[:3]]
     assert filas[0]["texto_indexado"].startswith("Estatuto de los Trabajadores")
+
+
+def test_leer_jsonl_recupera_los_mismos_chunks(chunks: list[Chunk], tmp_path: Path) -> None:
+    ruta = tmp_path / "chunks.jsonl"
+    guardar_jsonl(chunks, ruta)
+
+    assert leer_jsonl(ruta) == chunks
