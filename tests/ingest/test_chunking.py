@@ -2,8 +2,14 @@
 
 import pytest
 
-from estatuto_rag.ingest.chunking import MAX_TOKENS, contar_tokens, encabezado, trocear_articulo
-from estatuto_rag.ingest.models import Articulo, nombre_precepto
+from estatuto_rag.ingest.chunking import (
+    MAX_TOKENS,
+    contar_tokens,
+    encabezado,
+    nombre_precepto,
+    trocear_articulo,
+)
+from estatuto_rag.ingest.models import Articulo
 
 
 def _apartado(n: int, palabras: int) -> str:

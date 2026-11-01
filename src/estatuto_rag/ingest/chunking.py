@@ -46,7 +46,7 @@ def encabezado(articulo: Articulo) -> str:
     for nivel in (articulo.titulo_ley, articulo.capitulo, articulo.seccion):
         if nivel is not None:
             partes.append(nivel)
-        partes.append(f"{nombre_precepto(articulo.numero)}. {articulo.titulo}")
+    partes.append(f"{nombre_precepto(articulo.numero)}. {articulo.titulo}")
     return " · ".join(partes)
 
 
