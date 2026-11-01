@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="320" viewBox="0 0 760 320" role="img" aria-label="Latencia por pregunta (p50)"><title>Latencia por pregunta (p50)</title>
+<style>
+  .fondo { fill: #fcfcfb; }
+  .t1 { fill: #0b0b0b; font: 600 15px system-ui, -apple-system, 'Segoe UI', sans-serif; }
+  .t2 { fill: #52514e; font: 12px system-ui, -apple-system, 'Segoe UI', sans-serif; }
+  .val { fill: #0b0b0b; font: 600 11px system-ui, -apple-system, 'Segoe UI', sans-serif; }
+  .rejilla { stroke: #e4e3df; stroke-width: 1; }
+  .eje { stroke: #b5b4ad; stroke-width: 1; }
+  .s1 { fill: #2a78d6; } .s2 { fill: #eb6834; } .s3 { fill: #1baf7a; }
+  .trama { stroke: #eb6834; stroke-width: 1.5; }
+  .borde { stroke: #eb6834; stroke-width: 1; }
+  @media (prefers-color-scheme: dark) {
+    .fondo { fill: #1a1a19; }
+    .t1, .val { fill: #f0efec; }
+    .t2 { fill: #c3c2b7; }
+    .rejilla { stroke: #2e2e2c; }
+    .eje { stroke: #5a5955; }
+    .s1 { fill: #3987e5; } .s2 { fill: #d95926; } .s3 { fill: #199e70; }
+    .trama { stroke: #d95926; }
+    .borde { stroke: #d95926; }
+  }
+</style>
+<defs>
+  <pattern id="estimado" width="6" height="6" patternUnits="userSpaceOnUse"
+           patternTransform="rotate(45)">
+    <line x1="0" y1="0" x2="0" y2="6" class="trama"/>
+  </pattern>
+</defs>
+<rect class="fondo" width="760" height="320" rx="8"/><text x="16.0" y="28.0" class="t1" text-anchor="start">Latencia por pregunta (p50)</text><text x="16.0" y="48.0" class="t2" text-anchor="start">Local: qwen2.5:7b en Ollama. Producción: estimación para un 7B en GPU, no medida.</text><rect x="16.0" y="65.0" width="10" height="10" rx="2" class="s1"/><text x="31.0" y="74.0" class="t2" text-anchor="start">Medido en local (PC, CPU)</text><rect x="213.0" y="65.0" width="10" height="10" rx="2" fill="url(#estimado)" class="borde"/><text x="228.0" y="74.0" class="t2" text-anchor="start">Estimado en producción (GPU)</text><text x="198.0" y="112.0" class="t2" text-anchor="end">RAG simple</text><path class="s1" d="M210.0,92.0 H434.4 Q438.4,92.0 438.4,96.0 V106.0 Q438.4,110.0 434.4,110.0 H210.0 Z"/><text x="444.4" y="105.0" class="val" text-anchor="start">13.8 s</text><path fill="url(#estimado)" class="borde" d="M210.0,112.0 H230.8 Q234.8,112.0 234.8,116.0 V126.0 Q234.8,130.0 230.8,130.0 H210.0 Z"/><text x="240.8" y="125.0" class="val" text-anchor="start">~1.5 s</text><text x="198.0" y="168.0" class="t2" text-anchor="end">Agente v2 sin reintento</text><path class="s1" d="M210.0,148.0 H462.6 Q466.6,148.0 466.6,152.0 V162.0 Q466.6,166.0 462.6,166.0 H210.0 Z"/><text x="472.6" y="161.0" class="val" text-anchor="start">15.5 s</text><path fill="url(#estimado)" class="borde" d="M210.0,168.0 H230.8 Q234.8,168.0 234.8,172.0 V182.0 Q234.8,186.0 230.8,186.0 H210.0 Z"/><text x="240.8" y="181.0" class="val" text-anchor="start">~1.5 s</text><text x="198.0" y="224.0" class="t2" text-anchor="end">Agente v2 con reintento</text><path class="s1" d="M210.0,204.0 H679.4 Q683.4,204.0 683.4,208.0 V218.0 Q683.4,222.0 679.4,222.0 H210.0 Z"/><text x="689.4" y="217.0" class="val" text-anchor="start">28.6 s</text><path fill="url(#estimado)" class="borde" d="M210.0,224.0 H263.9 Q267.9,224.0 267.9,228.0 V238.0 Q267.9,242.0 263.9,242.0 H210.0 Z"/><text x="273.9" y="237.0" class="val" text-anchor="start">~3.5 s</text><text x="198.0" y="280.0" class="t2" text-anchor="end">Reranker (30 pares)</text><path class="s1" d="M210.0,260.0 H686.0 Q690.0,260.0 690.0,264.0 V274.0 Q690.0,278.0 686.0,278.0 H210.0 Z"/><text x="696.0" y="273.0" class="val" text-anchor="start">29 s</text><path fill="url(#estimado)" class="borde" d="M210.0,280.0 H210.0 Q213.3,280.0 213.3,283.3 V294.7 Q213.3,298.0 210.0,298.0 H210.0 Z"/><text x="219.3" y="293.0" class="val" text-anchor="start">~0.2 s</text><line x1="210" x2="210" y1="86" y2="306" class="eje"/></svg>
