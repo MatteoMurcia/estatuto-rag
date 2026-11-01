@@ -195,3 +195,7 @@ bash scripts/verify_ci.sh                               # lo mismo que la CI, en
 - Ampliar el golden set con preguntas reales; con 33 preguntas, una sola mueve 3 puntos.
 
 Texto legal: [BOE-A-2015-11430](https://www.boe.es/buscar/act.php?id=BOE-A-2015-11430), versión consolidada descargada el 29/10/2026.
+
+## Licencia
+
+Código bajo licencia [MIT](LICENSE). El texto del Estatuto es del BOE y no está cubierto por esta licencia. Para reportar vulnerabilidades, ver [SECURITY.md](SECURITY.md).
