@@ -10,6 +10,10 @@ dependencies = [
     "psycopg[binary]>=3.2",
 ]
 
+[project.optional-dependencies]
+# El reranker trae torch (~1 GB): opcional para que la CI no lo instale.
+rerank = ["sentence-transformers>=3.3"]
+
 [dependency-groups]
 dev = [
     "mypy>=1.13",
@@ -46,3 +50,7 @@ markers = [
 python_version = "3.12"
 strict = true
 files = ["src"]
+
+[[tool.mypy.overrides]]
+module = ["sentence_transformers.*"]
+ignore_missing_imports = true
