@@ -1,0 +1,101 @@
+"""Tests del chunking. Escritos antes de la implementación (TDD): empiezan en rojo."""
+
+import pytest
+
+from estatuto_rag.ingest.chunking import MAX_TOKENS, contar_tokens, encabezado, trocear_articulo
+from estatuto_rag.ingest.models import Articulo
+
+
+def _apartado(n: int, palabras: int) -> str:
+    return f"{n}. " + " ".join(["trabajador"] * palabras)
+
+
+@pytest.fixture
+def articulo_corto() -> Articulo:
+    return Articulo(
+        numero="38",
+        titulo="Vacaciones anuales",
+        texto=(
+            "1. El periodo de vacaciones anuales retribuidas, no sustituible por compensación "
+            "económica, será el pactado en convenio colectivo o contrato individual. En ningún "
+            "caso la duración será inferior a treinta días naturales.\n"
+            "2. El periodo o periodos de su disfrute se fijará de común acuerdo entre el "
+            "empresario y el trabajador."
+        ),
+        titulo_ley="Título I",
+        capitulo="Capítulo II",
+        seccion="Sección 5.ª",
+    )
+
+
+@pytest.fixture
+def articulo_largo() -> Articulo:
+    # 3 apartados de 150 palabras: el artículo entero supera 400 tokens, cada apartado no.
+    texto = "\n".join(_apartado(n, 150) for n in (1, 2, 3))
+    return Articulo(numero="52", titulo="Extinción del contrato por causas objetivas", texto=texto)
+
+
+# --- contar_tokens ---------------------------------------------------------------------------
+
+
+def test_contar_tokens_vacio_es_cero() -> None:
+    assert contar_tokens("") == 0
+
+
+def test_contar_tokens_crece_con_el_texto() -> None:
+    assert contar_tokens("uno dos tres cuatro") > contar_tokens("uno dos")
+
+
+# --- encabezado ------------------------------------------------------------------------------
+
+
+def test_encabezado_con_toda_la_jerarquia(articulo_corto: Articulo) -> None:
+    assert encabezado(articulo_corto) == (
+        "Estatuto de los Trabajadores · Título I · Capítulo II · Sección 5.ª · "
+        "Art. 38. Vacaciones anuales"
+    )
+
+
+def test_encabezado_omite_niveles_vacios(articulo_largo: Articulo) -> None:
+    assert encabezado(articulo_largo) == (
+        "Estatuto de los Trabajadores · Art. 52. Extinción del contrato por causas objetivas"
+    )
+
+
+# --- trocear_articulo ------------------------------------------------------------------------
+
+
+def test_articulo_corto_es_un_solo_chunk(articulo_corto: Articulo) -> None:
+    chunks = trocear_articulo(articulo_corto)
+
+    assert len(chunks) == 1
+    chunk = chunks[0]
+    assert chunk.id == "38"
+    assert chunk.articulo == "38"
+    assert chunk.apartado is None
+    assert chunk.padre is None
+    assert "treinta días naturales" in chunk.texto
+
+
+def test_articulo_largo_se_trocea_por_apartados(articulo_largo: Articulo) -> None:
+    chunks = trocear_articulo(articulo_largo)
+
+    assert [c.id for c in chunks] == ["52.1", "52.2", "52.3"]
+    assert [c.apartado for c in chunks] == ["1", "2", "3"]
+    assert all(c.padre == "52" and c.articulo == "52" for c in chunks)
+
+
+def test_ningun_chunk_vacio_ni_por_encima_del_maximo(
+    articulo_corto: Articulo, articulo_largo: Articulo
+) -> None:
+    for articulo in (articulo_corto, articulo_largo):
+        for chunk in trocear_articulo(articulo):
+            assert chunk.texto.strip()
+            assert contar_tokens(chunk.texto) <= MAX_TOKENS
+
+
+def test_texto_indexado_lleva_el_encabezado(articulo_corto: Articulo) -> None:
+    chunk = trocear_articulo(articulo_corto)[0]
+
+    assert chunk.texto_indexado.startswith(encabezado(articulo_corto))
+    assert chunk.encabezado == encabezado(articulo_corto)
