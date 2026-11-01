@@ -51,6 +51,20 @@ def _separar_apartados(texto: str) -> list[tuple[str | None, str]]:
     return [(numero, "\n".join(lineas)) for numero, lineas in apartados]
 
 
+def _agrupar_parrafos(texto: str, max_tokens: int) -> list[str]:
+    """Agrupa párrafos consecutivos en partes de como mucho `max_tokens`."""
+    partes: list[list[str]] = [[]]
+    tokens_parte = 0
+    for parrafo in texto.split("\n"):
+        tokens = contar_tokens(parrafo)
+        if partes[-1] and tokens_parte + tokens > max_tokens:
+            partes.append([])
+            tokens_parte = 0
+        partes[-1].append(parrafo)
+        tokens_parte += tokens
+    return ["\n".join(parte) for parte in partes]
+
+
 def trocear_articulo(articulo: Articulo, max_tokens: int = MAX_TOKENS) -> list[Chunk]:
     """Un chunk por artículo; si supera `max_tokens`, un chunk por apartado numerado.
 
@@ -73,15 +87,20 @@ def trocear_articulo(articulo: Articulo, max_tokens: int = MAX_TOKENS) -> list[C
 
     chunks = []
     for numero, texto in _separar_apartados(articulo.texto):
-        apartado = numero or "0"  # la introducción sin número se cita como "52.0"
-        chunks.append(
-            Chunk(
-                id=f"{articulo.numero}.{apartado}",
-                articulo=articulo.numero,
-                apartado=apartado,
-                padre=articulo.numero,
-                encabezado=cabecera,
-                texto=texto,
+        apartado = numero or "0"
+        partes = _agrupar_parrafos(texto, max_tokens)
+        for i, parte in enumerate(partes, start=1):
+            id_chunk = f"{articulo.numero}.{apartado}"
+            if len(partes) > 1:
+                id_chunk += f"#{i}"
+            chunks.append(
+                Chunk(
+                    id=id_chunk,
+                    articulo=articulo.numero,
+                    apartado=apartado,
+                    padre=articulo.numero,
+                    encabezado=cabecera,
+                    texto=parte,
+                )
             )
-        )
     return chunks

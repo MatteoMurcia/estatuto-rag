@@ -118,3 +118,17 @@ def test_parrafo_sin_numero_pertenece_al_apartado_anterior() -> None:
 
     assert [c.id for c in chunks] == ["38.1", "38.2", "38.3"]
     assert "En caso de desacuerdo" in chunks[1].texto
+
+
+def test_apartado_demasiado_largo_se_divide_por_parrafos() -> None:
+    # Un apartado de 3 párrafos de 150 palabras (~585 tokens) no cabe en 400: se parte en
+    # trozos de párrafos completos, todos citables como "41.4".
+    parrafo = " ".join(["trabajador"] * 150)
+    texto = "\n".join([_apartado(1, 50), "4. " + parrafo, parrafo, parrafo, _apartado(5, 50)])
+    articulo = Articulo(numero="41", titulo="Modificaciones sustanciales", texto=texto)
+
+    chunks = [c for c in trocear_articulo(articulo) if c.apartado == "4"]
+
+    assert len(chunks) > 1
+    assert [c.id for c in chunks] == [f"41.4#{i}" for i in range(1, len(chunks) + 1)]
+    assert all(contar_tokens(c.texto) <= MAX_TOKENS for c in chunks)
