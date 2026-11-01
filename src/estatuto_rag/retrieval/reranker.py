@@ -1,5 +1,6 @@
 """Reranking con un cross-encoder: recupera muchos candidatos y reordena los mejores."""
 
+import os
 from collections.abc import Sequence
 from dataclasses import replace
 from typing import Any, Protocol
@@ -17,6 +18,10 @@ class CrossEncoderPuntuador:
     """bge-reranker-v2-m3 con sentence-transformers (instalar con `uv sync --extra rerank`)."""
 
     def __init__(self, modelo: str = MODELO_RERANKER, max_length: int = 512) -> None:
+        # hf_xet (descarga acelerada) trae una DLL que algunas políticas de Windows bloquean:
+        # con esto se descarga por HTTP normal. setdefault respeta lo que ya tengas definido.
+        os.environ.setdefault("HF_HUB_DISABLE_XET", "1")
+        os.environ.setdefault("HF_HUB_DISABLE_SYMLINKS_WARNING", "1")
         # Import diferido: el paquete solo se carga si de verdad se usa el reranker.
         from sentence_transformers import CrossEncoder
 
