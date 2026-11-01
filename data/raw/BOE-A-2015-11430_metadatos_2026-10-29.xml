@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<response>
+  <status>
+    <code>200</code>
+    <text>ok</text>
+  </status>
+  <data>
+    <metadatos>
+      <fecha_actualizacion>20261029T082156Z</fecha_actualizacion>
+      <identificador>BOE-A-2015-11430</identificador>
+      <ambito codigo="1">Estatal</ambito>
+      <departamento codigo="9218">Ministerio de Empleo y Seguridad Social</departamento>
+      <rango codigo="1310">Real Decreto Legislativo</rango>
+      <fecha_disposicion>20151023</fecha_disposicion>
+      <numero_oficial>2/2015</numero_oficial>
+      <titulo>Real Decreto Legislativo 2/2015, de 23 de octubre, por el que se aprueba el texto refundido de la Ley del Estatuto de los Trabajadores.</titulo>
+      <diario>Boletín Oficial del Estado</diario>
+      <fecha_publicacion>20151024</fecha_publicacion>
+      <diario_numero>255</diario_numero>
+      <fecha_vigencia>20151113</fecha_vigencia>
+      <estatus_derogacion>N</estatus_derogacion>
+      <estatus_anulacion>N</estatus_anulacion>
+      <vigencia_agotada>N</vigencia_agotada>
+      <estado_consolidacion codigo="3">Finalizado</estado_consolidacion>
+      <url_eli>https://www.boe.es/eli/es/rdlg/2015/10/23/2</url_eli>
+      <url_html_consolidada>https://www.boe.es/buscar/act.php?id=BOE-A-2015-11430</url_html_consolidada>
+    </metadatos>
+  </data>
+</response>
