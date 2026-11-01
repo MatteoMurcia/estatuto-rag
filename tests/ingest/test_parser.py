@@ -67,3 +67,15 @@ def test_usa_solo_la_ultima_version(estatuto: dict[str, Articulo]) -> None:
 
 def test_descarta_las_notas_al_pie(estatuto: dict[str, Articulo]) -> None:
     assert not any("Ref. BOE-" in a.texto for a in estatuto.values())
+
+
+def test_numero_sale_del_texto_no_del_id_del_bloque(estatuto: dict[str, Articulo]) -> None:
+    # El bloque "a2-2" es el art. 20 bis y el bloque "da" es la disposición adicional 22.
+    assert estatuto["20bis"].titulo.startswith("Derechos de los trabajadores a la intimidad")
+    assert estatuto["da22"].titulo.startswith("Permisos de nacimiento")
+    assert "a2-2" not in estatuto
+
+
+def test_incluye_las_letras(estatuto: dict[str, Articulo]) -> None:
+    # Las letras a), b)… del art. 52 vienen como <p class="parrafo_2">.
+    assert "a) Por ineptitud del trabajador" in estatuto["52"].texto

@@ -6,6 +6,11 @@ Formato (ver tests/fixtures/boe_a38.xml y el spike):
 - En un precepto: <p class="articulo"> es "Artículo 38. Vacaciones anuales.", los
   <p class="parrafo"> son el texto y <p class="nota_pie"> son notas de modificación (se descartan).
 - Los encabezados (ti, cii, s5…) fijan Título / Capítulo / Sección de los preceptos que siguen.
+- OJO: los ids de bloque NO sirven como número de artículo ("a2-2" es el art. 20 bis, "da" es la
+  disposición adicional vigesimosegunda). El número sale del texto de <p class="articulo">.
+- Las letras a), b)… vienen como <p class="parrafo_2"> y son texto del precepto.
+- Antes de las disposiciones no hay encabezado que "cierre" el último Título: hay que resetear la
+  jerarquía al llegar a la primera disposición.
 """
 
 from estatuto_rag.ingest.models import Articulo
