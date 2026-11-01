@@ -4,7 +4,11 @@ version = "0.1.0"
 description = "RAG sobre el Estatuto de los Trabajadores con búsqueda híbrida, citas por artículo y evaluación en CI"
 readme = "README.md"
 requires-python = ">=3.12,<3.13"
-dependencies = []
+dependencies = [
+    "httpx>=0.28",
+    "pgvector>=0.3",
+    "psycopg[binary]>=3.2",
+]
 
 [dependency-groups]
 dev = [
