@@ -5,7 +5,6 @@ from collections.abc import Iterator
 import psycopg
 import pytest
 
-from estatuto_rag.config import cargar_config
 from estatuto_rag.embeddings import Embedder
 from estatuto_rag.ingest.models import Chunk
 from estatuto_rag.store.db import conectar
@@ -15,8 +14,8 @@ pytestmark = pytest.mark.integration
 
 
 @pytest.fixture
-def conn() -> Iterator[psycopg.Connection]:
-    with conectar(cargar_config().database_url) as conexion:
+def conn(database_url: str) -> Iterator[psycopg.Connection]:
+    with conectar(database_url) as conexion:
         conexion.execute("TRUNCATE chunks")
         yield conexion
         conexion.execute("TRUNCATE chunks")
