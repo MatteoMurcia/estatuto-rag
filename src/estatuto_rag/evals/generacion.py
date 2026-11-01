@@ -38,6 +38,7 @@ class FilaGeneracion:
     citas: list[str]
     citas_invalidas: list[str]
     abstencion: bool
+    fuentes: list[str]  # ids de los chunks del contexto, para poder recalcular citas sin rehacer
     cita_correcta: bool
     fiel: bool | None
     correcta: bool | None
@@ -67,6 +68,7 @@ def evaluar_pregunta(
         citas=r.citas,
         citas_invalidas=r.citas_invalidas,
         abstencion=r.abstencion,
+        fuentes=[f.id for f in r.fuentes],
         cita_correcta=cita_correcta,
         fiel=fiel,
         correcta=correcta,
