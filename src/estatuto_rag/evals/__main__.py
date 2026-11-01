@@ -14,14 +14,11 @@ from pathlib import Path
 from estatuto_rag.config import cargar_config
 from estatuto_rag.embeddings import Embedder, OllamaEmbedder
 from estatuto_rag.evals.cache import CACHE, EmbedderConCache, cargar_cache
+from estatuto_rag.evals.estrategias import construir_estrategias
 from estatuto_rag.evals.golden import cargar_golden
 from estatuto_rag.evals.informe import RESULTADOS, escribir_informe
 from estatuto_rag.evals.recuperacion import evaluar_recuperacion
 from estatuto_rag.ingest.pipeline import CHUNKS_JSONL, leer_jsonl
-from estatuto_rag.retrieval.base import Recuperador
-from estatuto_rag.retrieval.hibrido import RecuperadorHibrido
-from estatuto_rag.retrieval.textual import RecuperadorTextual
-from estatuto_rag.retrieval.vectorial import RecuperadorVectorial
 from estatuto_rag.store.db import conectar
 from estatuto_rag.store.indexar import indexar
 
@@ -42,22 +39,7 @@ def main() -> None:
 
     with conectar(config.database_url) as conn:
         indexar(conn, leer_jsonl(CHUNKS_JSONL), embedder)
-        vectorial = RecuperadorVectorial(conn, embedder)
-        textual = RecuperadorTextual(conn)
-        hibrido = RecuperadorHibrido([vectorial, textual])
-        estrategias: dict[str, Recuperador] = {
-            "vector": vectorial,
-            "texto": textual,
-            "hibrido": hibrido,
-        }
-        if args.rerank:
-            from estatuto_rag.retrieval.reranker import (
-                CrossEncoderPuntuador,
-                RecuperadorConReranker,
-            )
-
-            estrategias["hibrido+rerank"] = RecuperadorConReranker(hibrido, CrossEncoderPuntuador())
-
+        estrategias = construir_estrategias(conn, embedder, args.rerank)
         resultados = evaluar_recuperacion(cargar_golden(), estrategias)
 
     escribir_informe(resultados)
