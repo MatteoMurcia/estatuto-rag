@@ -102,6 +102,13 @@ curl -s localhost:8000/ask -H 'Content-Type: application/json' \
   -d '{"pregunta": "¿Cuántos días de vacaciones me corresponden?"}'
 ```
 
+Demo web (pregunta, modo RAG simple o agente, respuesta con citas, artículos leídos y reescrituras del agente):
+
+```bash
+uv sync --extra demo
+uv run streamlit run src/estatuto_rag/demo.py         # http://localhost:8501
+```
+
 Evaluaciones:
 
 ```bash
@@ -120,7 +127,6 @@ bash scripts/verify_ci.sh                               # lo mismo que la CI, en
 
 ## Próximos pasos
 
-- Demo en Streamlit.
 - Usar la puntuación del reranker como señal de abstención antes de generar (si ningún chunk supera un umbral, ni siquiera llamar al LLM).
 - Ampliar el golden set con preguntas reales; con 33 preguntas, una sola mueve 3 puntos.
 

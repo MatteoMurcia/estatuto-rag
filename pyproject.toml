@@ -16,6 +16,8 @@ dependencies = [
 [project.optional-dependencies]
 # El reranker trae torch (~1 GB): opcional para que la CI no lo instale.
 rerank = ["sentence-transformers>=3.3"]
+# Demo web: `uv sync --extra demo` y `uv run streamlit run src/estatuto_rag/demo.py`.
+demo = ["streamlit>=1.66.1"]
 
 [dependency-groups]
 dev = [
@@ -55,5 +57,5 @@ strict = true
 files = ["src"]
 
 [[tool.mypy.overrides]]
-module = ["sentence_transformers.*"]
+module = ["sentence_transformers.*", "streamlit.*"]  # extras opcionales: la CI no los instala
 ignore_missing_imports = true
