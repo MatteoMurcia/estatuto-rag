@@ -25,7 +25,7 @@ def rrf(rankings: Sequence[list[Resultado]], k: int = K_RRF) -> list[Resultado]:
 
 
 class RecuperadorHibrido:
-    def __init__(self, recuperadores: Sequence[Recuperador], candidatos: int = 30) -> None:
+    def __init__(self, recuperadores: Sequence[Recuperador], candidatos: int = 100) -> None:
         self._recuperadores = recuperadores
         self._candidatos = candidatos
 
