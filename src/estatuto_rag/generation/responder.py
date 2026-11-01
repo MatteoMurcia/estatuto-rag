@@ -3,7 +3,7 @@
 import time
 from dataclasses import dataclass
 
-from estatuto_rag.generation.citas import es_abstencion, extraer_citas, id_cita
+from estatuto_rag.generation.citas import cita_valida, es_abstencion, extraer_citas
 from estatuto_rag.generation.llm import LLM
 from estatuto_rag.generation.prompt import construir_mensajes
 from estatuto_rag.retrieval.base import Recuperador, Resultado
@@ -25,13 +25,12 @@ def responder(pregunta: str, recuperador: Recuperador, llm: LLM, k: int = 5) -> 
     fuentes = recuperador.recuperar(pregunta, k)
     texto = llm.generar(construir_mensajes(pregunta, fuentes))
 
-    permitidas = {id_cita(f) for f in fuentes} | {f.articulo for f in fuentes}
     citas = extraer_citas(texto)
     return Respuesta(
         pregunta=pregunta,
         respuesta=texto,
-        citas=[c for c in citas if c in permitidas],
-        citas_invalidas=[c for c in citas if c not in permitidas],
+        citas=[c for c in citas if cita_valida(c, fuentes)],
+        citas_invalidas=[c for c in citas if not cita_valida(c, fuentes)],
         abstencion=es_abstencion(texto),
         fuentes=fuentes,
         latencia_ms=(time.perf_counter() - inicio) * 1000,

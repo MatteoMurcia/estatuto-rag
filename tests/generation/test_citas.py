@@ -80,3 +80,15 @@ def test_responder_detecta_abstencion() -> None:
     r = responder("¿salario de un piloto?", RecuperadorFijo([_r("38", "1")]), LLMFijo(ABSTENCION))
     assert r.abstencion
     assert r.citas == []
+
+
+def test_cita_valida_acepta_mas_detalle_que_el_chunk() -> None:
+    from estatuto_rag.generation.citas import cita_valida
+
+    entero, apartado = _r("38", None), _r("54", "2")
+    assert cita_valida("38.1", [entero])  # el artículo 38 entero contiene el 38.1
+    assert cita_valida("54.2.a", [apartado])
+    assert cita_valida("54", [apartado])  # citar el artículo del apartado recuperado
+    assert not cita_valida("54.3", [apartado])  # otro apartado: no estaba en el contexto
+    assert not cita_valida("3", [entero])  # '3' no es prefijo de '38'
+    assert not cita_valida("38", [_r("38bis", None)])

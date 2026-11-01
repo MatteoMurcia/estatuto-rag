@@ -33,5 +33,16 @@ def extraer_citas(texto: str) -> list[str]:
     return citas
 
 
+def cita_valida(cita: str, fuentes: list[Resultado]) -> bool:
+    """¿Sale la cita del contexto? Acepta citar con más detalle que el chunk recuperado:
+    con el 38 entero en el contexto, '[art. 38.1]' es válida; con el 54.2, '54.2.a' también.
+    """
+    for f in fuentes:
+        base = id_cita(f)
+        if cita == f.articulo or cita == base or cita.startswith((base + ".", base + " ")):
+            return True
+    return False
+
+
 def es_abstencion(texto: str) -> bool:
     return ABSTENCION.lower().rstrip(".") in texto.lower()
