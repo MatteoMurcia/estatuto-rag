@@ -17,15 +17,17 @@ Ollama (útil al cambiar una métrica: las respuestas guardadas no cambian).
 import argparse
 import json
 import statistics
+from collections.abc import Callable
 from dataclasses import asdict, dataclass
 from typing import Any
 
 from estatuto_rag.evals.golden import PreguntaGolden
 from estatuto_rag.evals.juez import Juez
+from estatuto_rag.evals.metricas import hit_at_k
 from estatuto_rag.evals.numeros import numeros_no_respaldados
 from estatuto_rag.generation.citas import cita_valida, extraer_citas
 from estatuto_rag.generation.llm import LLM
-from estatuto_rag.generation.responder import responder
+from estatuto_rag.generation.responder import Respuesta, responder
 from estatuto_rag.ingest.models import Chunk
 from estatuto_rag.retrieval.base import Recuperador, Resultado
 
@@ -46,6 +48,8 @@ class FilaGeneracion:
     citas: list[str]
     citas_invalidas: list[str]
     abstencion: bool
+    consultas: list[str]  # búsquedas hechas (el agente hace varias)
+    contexto_acierta: bool  # ¿llegó al contexto algún artículo de referencia? (hit@k)
     fuentes: list[str]  # ids de los chunks del contexto, para poder recalcular citas sin rehacer
     cita_correcta: bool
     cifras_inventadas: list[int]
@@ -61,10 +65,17 @@ def _cifras_inventadas(respuesta: str, fuentes: list[Resultado], abstencion: boo
     return sorted(numeros_no_respaldados(respuesta, contexto))
 
 
+Responder = Callable[[str], Respuesta]  # RAG simple o agente: pregunta → respuesta
+
+
+def rag_simple(recuperador: Recuperador, llm: LLM) -> Responder:
+    return lambda pregunta: responder(pregunta, recuperador, llm)
+
+
 def evaluar_pregunta(
-    p: PreguntaGolden, recuperador: Recuperador, llm: LLM, juez: Juez | None
+    p: PreguntaGolden, responder_fn: Responder, juez: Juez | None
 ) -> FilaGeneracion:
-    r = responder(p.pregunta, recuperador, llm)
+    r = responder_fn(p.pregunta)
     cita_correcta = any(cita_acierta(c, ref) for c in r.citas for ref in p.articulos_relevantes)
     fiel = correcta = None
     if juez is not None and not r.abstencion:
@@ -84,6 +95,8 @@ def evaluar_pregunta(
         citas=r.citas,
         citas_invalidas=r.citas_invalidas,
         abstencion=r.abstencion,
+        consultas=r.consultas,
+        contexto_acierta=bool(hit_at_k(r.fuentes, p.articulos_relevantes, len(r.fuentes))),
         fuentes=[f.id for f in r.fuentes],
         cita_correcta=cita_correcta,
         cifras_inventadas=_cifras_inventadas(r.respuesta, r.fuentes, r.abstencion),
@@ -102,6 +115,7 @@ def resumir(filas: list[FilaGeneracion]) -> dict[str, float | None]:
     con = [f for f in filas if f.tipo != "sin_respuesta"]
     sin = [f for f in filas if f.tipo == "sin_respuesta"]
     return {
+        "contexto_acierta": _tasa([f.contexto_acierta for f in con]),
         "abstencion_correcta": _tasa([f.abstencion for f in sin]),
         "abstencion_indebida": _tasa([f.abstencion for f in con]),
         "citas_inventadas": _tasa([bool(f.citas_invalidas) for f in filas]),
@@ -114,6 +128,7 @@ def resumir(filas: list[FilaGeneracion]) -> dict[str, float | None]:
 
 
 COLUMNAS = {
+    "contexto_acierta": "Artículo en contexto ↑",
     "abstencion_correcta": "Abstención correcta ↑",
     "abstencion_indebida": "Abstención indebida ↓",
     "citas_inventadas": "Citas inventadas ↓",
@@ -160,6 +175,8 @@ def recalcular(
                 "citas_invalidas": [c for c in citas if c not in validas],
                 "cita_correcta": any(cita_acierta(c, r) for c in validas for r in refs[d["id"]]),
                 "cifras_inventadas": _cifras_inventadas(d["respuesta"], fuentes, d["abstencion"]),
+                "consultas": d.get("consultas") or [d["pregunta"]],
+                "contexto_acierta": bool(hit_at_k(fuentes, refs[d["id"]], len(fuentes))),
             }
             nuevas.append(FilaGeneracion(**d))
         salida[nombre] = nuevas
@@ -187,6 +204,7 @@ def guardar(filas_por_modo: dict[str, list[FilaGeneracion]]) -> str:
 
 
 def main() -> None:
+    from estatuto_rag.agente.grafo import Agente
     from estatuto_rag.config import cargar_config
     from estatuto_rag.embeddings import OllamaEmbedder
     from estatuto_rag.evals.cache import EmbedderConCache, cargar_cache
@@ -195,10 +213,11 @@ def main() -> None:
     from estatuto_rag.evals.informe import RESULTADOS
     from estatuto_rag.generation.llm import OllamaLLM
     from estatuto_rag.ingest.pipeline import CHUNKS_JSONL, leer_jsonl
+    from estatuto_rag.retrieval.reescritura import Reescritor
     from estatuto_rag.store.db import conectar
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("--modo", nargs="+", choices=NOMBRES, default=["hibrido"])
+    parser.add_argument("--modo", nargs="+", choices=[*NOMBRES, "agente"], default=["hibrido"])
     parser.add_argument("--sin-juez", action="store_true")
     parser.add_argument("--recalcular", action="store_true")
     args = parser.parse_args()
@@ -221,8 +240,14 @@ def main() -> None:
         estrategias = construir_estrategias(conn, embedder, "hibrido+rerank" in args.modo)
         for nombre in args.modo:
             filas = []
+            if nombre == "agente":
+                # El agente usa el híbrido como buscador base: mide solo reescritura + reintento.
+                agente = Agente(estrategias["hibrido"], llm, Reescritor(llm))
+                responder_fn: Responder = agente.responder
+            else:
+                responder_fn = rag_simple(estrategias[nombre], llm)
             for i, p in enumerate(golden, start=1):
-                fila = evaluar_pregunta(p, estrategias[nombre], llm, juez)
+                fila = evaluar_pregunta(p, responder_fn, juez)
                 print(f"[{nombre}] {i}/{len(golden)} {p.id} {fila.latencia_ms / 1000:.1f}s")
                 filas.append(fila)
             filas_por_modo[nombre] = filas

@@ -4,6 +4,7 @@ Opciones:
   --rerank           incluye híbrido + reranker (necesita `uv sync --extra rerank`)
   --solo-cache       usa solo embeddings precalculados (lo que hace la CI, sin Ollama)
   --min-hit5 0.70    sale con error si el hit@5 del híbrido baja de ese umbral (gate de CI)
+  --reescritura      incluye híbrido + reescritura de la consulta con el LLM (necesita Ollama)
   --cache RUTA       caché de embeddings a usar (por defecto data/embeddings/bge-m3.jsonl.gz)
 """
 
@@ -29,7 +30,10 @@ def main() -> None:
     parser.add_argument("--solo-cache", action="store_true")
     parser.add_argument("--min-hit5", type=float, default=None)
     parser.add_argument("--cache", type=Path, default=CACHE)
+    parser.add_argument("--reescritura", action="store_true")
     args = parser.parse_args()
+    if args.reescritura and args.solo_cache:
+        parser.error("--reescritura genera consultas nuevas: sus embeddings no están en la caché")
 
     config = cargar_config()
     respaldo: Embedder | None = None
@@ -40,6 +44,14 @@ def main() -> None:
     with conectar(config.database_url) as conn:
         indexar(conn, leer_jsonl(CHUNKS_JSONL), embedder)
         estrategias = construir_estrategias(conn, embedder, args.rerank)
+        if args.reescritura:
+            from estatuto_rag.generation.llm import OllamaLLM
+            from estatuto_rag.retrieval.reescritura import RecuperadorConReescritura, Reescritor
+
+            reescritor = Reescritor(OllamaLLM(config.ollama_url, config.llm_model))
+            estrategias["hibrido+reescritura"] = RecuperadorConReescritura(
+                estrategias["hibrido"], reescritor
+            )
         resultados = evaluar_recuperacion(cargar_golden(), estrategias)
 
     escribir_informe(resultados)
