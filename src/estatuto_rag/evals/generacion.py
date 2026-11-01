@@ -7,19 +7,27 @@ Métricas deterministas (sin juez):
 - abstención indebida: en las que sí tienen respuesta, ¿se abstiene igualmente?
 - citas inventadas: respuestas que citan un artículo que no estaba en el contexto
 - cita correcta: respuestas que citan al menos uno de los artículos de referencia
+- cifras fieles: respuestas cuyos números aparecen todos en el contexto (evals/numeros.py)
 Métricas con juez (phi4-mini): fidelidad al contexto y corrección frente a la referencia.
+
+`--recalcular` rehace las métricas deterministas desde results/generacion.json sin llamar a
+Ollama (útil al cambiar una métrica: las respuestas guardadas no cambian).
 """
 
 import argparse
 import json
 import statistics
 from dataclasses import asdict, dataclass
+from typing import Any
 
 from estatuto_rag.evals.golden import PreguntaGolden
 from estatuto_rag.evals.juez import Juez
+from estatuto_rag.evals.numeros import numeros_no_respaldados
+from estatuto_rag.generation.citas import cita_valida, extraer_citas
 from estatuto_rag.generation.llm import LLM
 from estatuto_rag.generation.responder import responder
-from estatuto_rag.retrieval.base import Recuperador
+from estatuto_rag.ingest.models import Chunk
+from estatuto_rag.retrieval.base import Recuperador, Resultado
 
 
 def cita_acierta(cita: str, referencia: str) -> bool:
@@ -40,9 +48,17 @@ class FilaGeneracion:
     abstencion: bool
     fuentes: list[str]  # ids de los chunks del contexto, para poder recalcular citas sin rehacer
     cita_correcta: bool
+    cifras_inventadas: list[int]
     fiel: bool | None
     correcta: bool | None
     latencia_ms: float
+
+
+def _cifras_inventadas(respuesta: str, fuentes: list[Resultado], abstencion: bool) -> list[int]:
+    if abstencion:
+        return []
+    contexto = "\n".join(f.texto for f in fuentes)
+    return sorted(numeros_no_respaldados(respuesta, contexto))
 
 
 def evaluar_pregunta(
@@ -70,6 +86,7 @@ def evaluar_pregunta(
         abstencion=r.abstencion,
         fuentes=[f.id for f in r.fuentes],
         cita_correcta=cita_correcta,
+        cifras_inventadas=_cifras_inventadas(r.respuesta, r.fuentes, r.abstencion),
         fiel=fiel,
         correcta=correcta,
         latencia_ms=r.latencia_ms,
@@ -89,6 +106,7 @@ def resumir(filas: list[FilaGeneracion]) -> dict[str, float | None]:
         "abstencion_indebida": _tasa([f.abstencion for f in con]),
         "citas_inventadas": _tasa([bool(f.citas_invalidas) for f in filas]),
         "cita_correcta": _tasa([f.cita_correcta for f in con]),
+        "cifras_fieles": _tasa([not f.cifras_inventadas for f in filas if not f.abstencion]),
         "fidelidad": _tasa([f.fiel for f in filas]),
         "correccion": _tasa([f.correcta for f in con]),
         "p50_ms": statistics.median(f.latencia_ms for f in filas) if filas else None,
@@ -100,6 +118,7 @@ COLUMNAS = {
     "abstencion_indebida": "Abstención indebida ↓",
     "citas_inventadas": "Citas inventadas ↓",
     "cita_correcta": "Cita correcta ↑",
+    "cifras_fieles": "Cifras fieles ↑",
     "fidelidad": "Fidelidad (juez) ↑",
     "correccion": "Corrección (juez) ↑",
     "p50_ms": "p50 (s)",
@@ -123,42 +142,39 @@ def tabla_markdown(resumenes: dict[str, dict[str, float | None]]) -> str:
     return "\n".join(lineas) + "\n"
 
 
-def main() -> None:
-    from estatuto_rag.config import cargar_config
-    from estatuto_rag.embeddings import OllamaEmbedder
-    from estatuto_rag.evals.cache import EmbedderConCache, cargar_cache
-    from estatuto_rag.evals.estrategias import NOMBRES, construir_estrategias
-    from estatuto_rag.evals.golden import cargar_golden
+def recalcular(
+    detalle: dict[str, list[dict[str, Any]]], golden: list[PreguntaGolden], chunks: list[Chunk]
+) -> dict[str, list[FilaGeneracion]]:
+    """Rehace citas y cifras de respuestas ya guardadas, a partir de los ids de sus fuentes."""
+    por_id = {c.id: c for c in chunks}
+    refs = {p.id: p.articulos_relevantes for p in golden}
+    salida: dict[str, list[FilaGeneracion]] = {}
+    for nombre, filas in detalle.items():
+        nuevas = []
+        for d in filas:
+            fuentes = [_resultado(por_id[i]) for i in d["fuentes"]]
+            citas = extraer_citas(d["respuesta"])
+            validas = [c for c in citas if cita_valida(c, fuentes)]
+            d = d | {
+                "citas": validas,
+                "citas_invalidas": [c for c in citas if c not in validas],
+                "cita_correcta": any(cita_acierta(c, r) for c in validas for r in refs[d["id"]]),
+                "cifras_inventadas": _cifras_inventadas(d["respuesta"], fuentes, d["abstencion"]),
+            }
+            nuevas.append(FilaGeneracion(**d))
+        salida[nombre] = nuevas
+    return salida
+
+
+def _resultado(c: Chunk) -> Resultado:
+    return Resultado(c.id, c.articulo, c.apartado, c.encabezado, c.texto, 0.0)
+
+
+def guardar(filas_por_modo: dict[str, list[FilaGeneracion]]) -> str:
     from estatuto_rag.evals.informe import RESULTADOS
-    from estatuto_rag.generation.llm import OllamaLLM
-    from estatuto_rag.store.db import conectar
 
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--modo", nargs="+", choices=NOMBRES, default=["hibrido"])
-    parser.add_argument("--sin-juez", action="store_true")
-    args = parser.parse_args()
-
-    config = cargar_config()
-    embedder = EmbedderConCache(
-        cargar_cache(), OllamaEmbedder(config.ollama_url, config.embed_model)
-    )
-    llm = OllamaLLM(config.ollama_url, config.llm_model)
-    juez = None if args.sin_juez else Juez(OllamaLLM(config.ollama_url, config.judge_model))
-    golden = cargar_golden()
-
-    resumenes: dict[str, dict[str, float | None]] = {}
-    detalle: dict[str, list[dict[str, object]]] = {}
-    with conectar(config.database_url) as conn:
-        estrategias = construir_estrategias(conn, embedder, "hibrido+rerank" in args.modo)
-        for nombre in args.modo:
-            filas = []
-            for i, p in enumerate(golden, start=1):
-                fila = evaluar_pregunta(p, estrategias[nombre], llm, juez)
-                print(f"[{nombre}] {i}/{len(golden)} {p.id} {fila.latencia_ms / 1000:.1f}s")
-                filas.append(fila)
-            resumenes[nombre] = resumir(filas)
-            detalle[nombre] = [asdict(f) for f in filas]
-
+    resumenes = {nombre: resumir(filas) for nombre, filas in filas_por_modo.items()}
+    detalle = {nombre: [asdict(f) for f in filas] for nombre, filas in filas_por_modo.items()}
     RESULTADOS.mkdir(exist_ok=True)
     tabla = tabla_markdown(resumenes)
     (RESULTADOS / "generacion.md").write_text(tabla, encoding="utf-8", newline="\n")
@@ -167,7 +183,50 @@ def main() -> None:
         encoding="utf-8",
         newline="\n",
     )
-    print(tabla)
+    return tabla
+
+
+def main() -> None:
+    from estatuto_rag.config import cargar_config
+    from estatuto_rag.embeddings import OllamaEmbedder
+    from estatuto_rag.evals.cache import EmbedderConCache, cargar_cache
+    from estatuto_rag.evals.estrategias import NOMBRES, construir_estrategias
+    from estatuto_rag.evals.golden import cargar_golden
+    from estatuto_rag.evals.informe import RESULTADOS
+    from estatuto_rag.generation.llm import OllamaLLM
+    from estatuto_rag.ingest.pipeline import CHUNKS_JSONL, leer_jsonl
+    from estatuto_rag.store.db import conectar
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--modo", nargs="+", choices=NOMBRES, default=["hibrido"])
+    parser.add_argument("--sin-juez", action="store_true")
+    parser.add_argument("--recalcular", action="store_true")
+    args = parser.parse_args()
+    golden = cargar_golden()
+
+    if args.recalcular:
+        guardado = json.loads((RESULTADOS / "generacion.json").read_text(encoding="utf-8"))
+        print(guardar(recalcular(guardado["detalle"], golden, leer_jsonl(CHUNKS_JSONL))))
+        return
+
+    config = cargar_config()
+    embedder = EmbedderConCache(
+        cargar_cache(), OllamaEmbedder(config.ollama_url, config.embed_model)
+    )
+    llm = OllamaLLM(config.ollama_url, config.llm_model)
+    juez = None if args.sin_juez else Juez(OllamaLLM(config.ollama_url, config.judge_model))
+
+    filas_por_modo: dict[str, list[FilaGeneracion]] = {}
+    with conectar(config.database_url) as conn:
+        estrategias = construir_estrategias(conn, embedder, "hibrido+rerank" in args.modo)
+        for nombre in args.modo:
+            filas = []
+            for i, p in enumerate(golden, start=1):
+                fila = evaluar_pregunta(p, estrategias[nombre], llm, juez)
+                print(f"[{nombre}] {i}/{len(golden)} {p.id} {fila.latencia_ms / 1000:.1f}s")
+                filas.append(fila)
+            filas_por_modo[nombre] = filas
+    print(guardar(filas_por_modo))
 
 
 if __name__ == "__main__":

@@ -81,4 +81,6 @@ def test_resumen_separa_preguntas_con_y_sin_respuesta() -> None:
     assert resumen["citas_inventadas"] == 0.25
     assert resumen["cita_correcta"] == 0.5
     assert resumen["fidelidad"] is None  # sin juez
-    assert "| hibrido | 0.50 | 0.50 | 0.25 | 0.50 | - | - |" in tabla_markdown({"hibrido": resumen})
+    assert "| hibrido | 0.50 | 0.50 | 0.25 | 0.50 | 1.00 | - | - |" in tabla_markdown(
+        {"hibrido": resumen}
+    )
